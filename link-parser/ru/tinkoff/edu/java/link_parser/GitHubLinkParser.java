@@ -8,7 +8,7 @@ public class GitHubLinkParser extends Parser {
     }
 
     @Override
-    public Object parseLinkImpl(URL url) {
+    public ParsedObject parseLinkImpl(URL url) {
         if (url.getHost().equals("github.com")) {
             String[] arr = url.getPath().split("/");
             if (arr.length > 2) {

@@ -9,10 +9,10 @@ abstract class Parser {
         this.nextParser = nextParser;
     }
 
-    abstract Object parseLinkImpl(URL url);
+    abstract ParsedObject parseLinkImpl(URL url);
 
-    public Object parseLink(URL url) {
-        Object res = parseLinkImpl(url);
+    public ParsedObject parseLink(URL url) {
+        ParsedObject res = parseLinkImpl(url);
         if (res != null) {
             return res;
         }

@@ -8,7 +8,7 @@ public class StackOverflowLinkParser extends Parser {
     }
 
     @Override
-    public Object parseLinkImpl(URL url) {
+    public ParsedObject parseLinkImpl(URL url) {
         if (url.getHost().equals("stackoverflow.com")) {
             String[] arr = url.getPath().split("/");
             try {

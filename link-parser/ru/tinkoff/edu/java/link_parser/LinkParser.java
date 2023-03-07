@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class LinkParser {
-    public static Object parseLink(String link) {
+    public static ParsedObject parseLink(String link) {
         try {
             URL url = new URL(link);
             Parser parser = new GitHubLinkParser(new StackOverflowLinkParser(null));
