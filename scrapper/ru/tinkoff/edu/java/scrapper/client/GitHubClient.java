@@ -18,10 +18,6 @@ public class GitHubClient {
         this.webClient = WebClient.create(baseUrl);
     }
 
-    private String requestRepository(String user, String repository) {
-        return webClient.get().uri("/repos/" + user + "/" + repository).
-                retrieve().bodyToMono(String.class).share().block();
-    }
 
     public RepositoryResponse fetchRepository(String user, String repository) {
         try {
@@ -31,5 +27,10 @@ public class GitHubClient {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    private String requestRepository(String user, String repository) {
+        return webClient.get().uri("/repos/" + user + "/" + repository).
+                retrieve().bodyToMono(String.class).share().block();
     }
 }
