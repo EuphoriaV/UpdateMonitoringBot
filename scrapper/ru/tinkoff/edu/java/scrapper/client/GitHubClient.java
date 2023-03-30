@@ -9,15 +9,15 @@ import java.time.OffsetDateTime;
 
 public class GitHubClient {
     private final WebClient webClient;
+    private final String BASE_URL = "https://api.github.com";
 
     public GitHubClient() {
-        webClient = WebClient.create("https://api.github.com");
+        webClient = WebClient.create(BASE_URL);
     }
 
     public GitHubClient(String baseUrl) {
         this.webClient = WebClient.create(baseUrl);
     }
-
 
     public RepositoryResponse fetchRepository(String user, String repository) {
         try {
@@ -30,7 +30,7 @@ public class GitHubClient {
     }
 
     private String requestRepository(String user, String repository) {
-        return webClient.get().uri("/repos/" + user + "/" + repository).
+        return webClient.get().uri("/repos/{user}/{repo}", user, repository).
                 retrieve().bodyToMono(String.class).share().block();
     }
 }

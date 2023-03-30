@@ -12,21 +12,21 @@ import ru.tinkoff.edu.java.scrapper.exceptions.InvalidParametersException;
 @RequestMapping("/links")
 public class LinksController {
     @GetMapping
-    public ListLinksResponse getLinks(@RequestParam long tgChatId) {
+    public ListLinksResponse getLinks(@RequestHeader long tgChatId) {
         //throw new InvalidParametersException("Invalid parameters");
         return null;
     }
 
     @PostMapping
-    public LinkResponse addLink(@RequestParam long tgChatId, @RequestBody AddLinkRequest addLinkRequest) {
+    public LinkResponse addLink(@RequestHeader long tgChatId, @RequestBody AddLinkRequest addLinkRequest) {
         //throw new InvalidParametersException("Invalid parameters");
         return null;
     }
 
     @DeleteMapping
-    public LinkResponse deleteLink(@RequestParam long tgChatId, @RequestBody RemoveLinkRequest removeLinkRequest) {
+    public LinkResponse deleteLink(@RequestHeader long tgChatId, @RequestBody RemoveLinkRequest removeLinkRequest) {
         //throw new InvalidParametersException("Invalid parameters");
         //throw new LinkNotFoundException("Link not found");
-        return null;
+        return new LinkResponse(tgChatId, removeLinkRequest.link());
     }
 }
