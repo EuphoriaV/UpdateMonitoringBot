@@ -12,8 +12,10 @@ import java.time.ZoneOffset;
 public class StackOverflowClient {
     private final WebClient webClient;
 
+    private final String BASE_URL = "https://api.stackexchange.com/2.3";
+
     public StackOverflowClient() {
-        webClient = WebClient.create("https://api.stackexchange.com/2.3");
+        webClient = WebClient.create(BASE_URL);
     }
 
     public StackOverflowClient(String baseUrl) {
@@ -32,7 +34,7 @@ public class StackOverflowClient {
     }
 
     private String requestQuestion(long id) {
-        return webClient.get().uri("/questions/" + id + "?site=stackoverflow").
+        return webClient.get().uri("/questions/{id}?site=stackoverflow", id).
                 retrieve().bodyToMono(String.class).share().block();
     }
 }
