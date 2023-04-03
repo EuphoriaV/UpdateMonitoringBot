@@ -6,6 +6,9 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.tinkoff.edu.java.bot.annotation.Command;
+
+import java.lang.reflect.Method;
 
 //У бота username @UpdateMonitoringBot (меню добавлено)
 @Component
@@ -17,27 +20,32 @@ public class UpdateMonitoringBot extends Bot {
         telegramBot.setUpdatesListener(this);
     }
 
+    @Command(name = "/help", description = "вывести окно с командами")
+    public SendResponse help(long chatId) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Method method : getCommandHandlers()) {
+            var command = method.getAnnotation(Command.class);
+            stringBuilder.append(command.name()).append(" - ").append(command.description()).append("\n");
+        }
+        return sendMessage(chatId, stringBuilder.toString());
+    }
+
+    @Command(name = "/start", description = "зарегистрировать пользователя")
     public SendResponse start(long chatId) {
         return sendMessage(chatId, "Registering user...");
     }
 
+    @Command(name = "/list", description = "показать список отслеживаемых ссылок")
     public SendResponse list(long chatId) {
         return sendMessage(chatId, "Пока что отсутствуют отслеживаемые ссылки");
     }
 
-    public SendResponse help(long chatId) {
-        return sendMessage(chatId, """
-                /start - зарегистрировать пользователя
-                /help - вывести окно с командами
-                /track - начать отслеживание ссылки
-                /untrack - прекратить отслеживание ссылки
-                /list - показать список отслеживаемых ссылок""");
-    }
-
+    @Command(name = "/track", description = "начать отслеживание ссылки")
     public SendResponse track(long chatId) {
         return sendMessage(chatId, "Tracking link...");
     }
 
+    @Command(name = "/untrack", description = "прекратить отслеживание ссылки")
     public SendResponse untrack(long chatId) {
         return sendMessage(chatId, "Untracking link...");
     }
