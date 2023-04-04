@@ -1,5 +1,3 @@
-package ru.tinkoff.edu.java.bot.test;
-
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.MessageEntity;
 import org.junit.jupiter.api.BeforeAll;

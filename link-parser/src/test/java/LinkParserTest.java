@@ -1,11 +1,10 @@
-package ru.tinkoff.edu.java.link_parser.test;
-
 import org.junit.jupiter.api.Test;
 import ru.tinkoff.edu.java.link_parser.GithubRepository;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class LinkParserTest {

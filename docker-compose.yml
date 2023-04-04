@@ -14,10 +14,16 @@ services:
       - "5432:5432"
     networks:
       - backend
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   liquibase-migrations:
     container_name: liquibase
     image: liquibase/liquibase:4.18
+    restart: on-failure
     depends_on:
       - postgresql
     command:
