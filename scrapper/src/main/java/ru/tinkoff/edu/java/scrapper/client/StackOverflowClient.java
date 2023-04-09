@@ -35,6 +35,6 @@ public class StackOverflowClient {
 
     private String requestQuestion(long id) {
         return webClient.get().uri("/questions/{id}?site=stackoverflow", id).
-                retrieve().bodyToMono(String.class).share().block();
+                retrieve().bodyToMono(String.class).block();
     }
 }

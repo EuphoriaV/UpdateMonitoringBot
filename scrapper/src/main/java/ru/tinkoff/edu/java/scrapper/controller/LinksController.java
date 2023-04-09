@@ -6,7 +6,7 @@ import ru.tinkoff.edu.java.scrapper.dto.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.exceptions.LinkNotFoundException;
-import ru.tinkoff.edu.java.scrapper.exceptions.InvalidParametersException;
+import ru.tinkoff.edu.java.bot.exceptions.InvalidParametersException;
 
 @RestController
 @RequestMapping("/links")

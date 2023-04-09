@@ -31,6 +31,6 @@ public class GitHubClient {
 
     private String requestRepository(String user, String repository) {
         return webClient.get().uri("/repos/{user}/{repo}", user, repository).
-                retrieve().bodyToMono(String.class).share().block();
+                retrieve().bodyToMono(String.class).block();
     }
 }
