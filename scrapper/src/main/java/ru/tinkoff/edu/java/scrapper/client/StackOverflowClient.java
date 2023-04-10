@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.client;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.reactive.function.client.WebClient;
+import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 import ru.tinkoff.edu.java.scrapper.dto.QuestionResponse;
 
 import java.time.LocalDateTime;
@@ -22,9 +23,10 @@ public class StackOverflowClient {
         this.webClient = WebClient.create(baseUrl);
     }
 
-    public QuestionResponse fetchQuestion(long id) {
+    public QuestionResponse fetchQuestion(StackOverflowQuestion question) {
         try {
-            JSONObject obj = new JSONObject(requestQuestion(id)).getJSONArray("items").getJSONObject(0);
+            JSONObject obj = new JSONObject(requestQuestion(question.id())).
+                    getJSONArray("items").getJSONObject(0);
             return new QuestionResponse(obj.getLong("question_id"), obj.getString("title"),
                     OffsetDateTime.of(LocalDateTime.ofEpochSecond(obj.getLong("last_edit_date"),
                             0, ZoneOffset.UTC), ZoneOffset.UTC));

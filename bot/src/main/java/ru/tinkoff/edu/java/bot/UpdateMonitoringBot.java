@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 public class UpdateMonitoringBot extends Bot {
     public final TelegramBot telegramBot;
 
-    public UpdateMonitoringBot(@Value("${app.token}") String token) {
+    public UpdateMonitoringBot(@Value("${bot.token}") String token) {
         this.telegramBot = new TelegramBot(token);
         telegramBot.setUpdatesListener(this);
     }

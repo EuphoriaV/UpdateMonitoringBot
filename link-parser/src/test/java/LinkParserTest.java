@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import ru.tinkoff.edu.java.link_parser.GithubRepository;
+import ru.tinkoff.edu.java.link_parser.GitHubRepository;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 
@@ -12,7 +12,7 @@ public class LinkParserTest {
     public void testValidGithubLinks() {
         var rep1 = LinkParser.parseLink("https://github.com/EuphoriaV/WeChat");
         var rep2 = LinkParser.parseLink("https://github.com/EuphoriaV/WeChat/asfdsflsdkf;lsdlf");
-        var ans = new GithubRepository("EuphoriaV", "WeChat");
+        var ans = new GitHubRepository("EuphoriaV", "WeChat");
         assertEquals(ans, rep1);
         assertEquals(ans, rep2);
     }
