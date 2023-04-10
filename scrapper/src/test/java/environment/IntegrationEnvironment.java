@@ -4,6 +4,8 @@ import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.DirectoryResourceAccessor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.FileNotFoundException;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 
 public abstract class IntegrationEnvironment {
     protected static final PostgreSQLContainer container;
+    protected static final JdbcTemplate jdbcTemplate;
 
     static {
         container = new PostgreSQLContainer("postgres:14")
@@ -27,6 +30,8 @@ public abstract class IntegrationEnvironment {
                     Path.of(".").toAbsolutePath().getParent().getParent().resolve("migrations")),
                     new JdbcConnection(connection));
             liquibase.update();
+            jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(
+                    container.createConnection(""), false));
         } catch (SQLException | LiquibaseException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }
