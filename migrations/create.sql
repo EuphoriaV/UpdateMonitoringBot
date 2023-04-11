@@ -6,8 +6,9 @@ create table chats
 
 create table links
 (
-    link_id serial primary key,
-    url     text unique
+    link_id    serial primary key,
+    url        text unique,
+    checked_at timestamp
 );
 
 create table chat_link
