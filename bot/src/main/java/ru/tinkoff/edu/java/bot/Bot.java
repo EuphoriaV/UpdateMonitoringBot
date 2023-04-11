@@ -29,24 +29,23 @@ public abstract class Bot implements UpdatesListener {
         }
         Message message = update.message();
         if (message.text() == null) {
-            handleInvalidMessage(message.chat().id(), "");
+            handleInvalidMessage(message);
             return;
         }
         String messageText = message.text();
-        long chatId = message.chat().id();
         for (Method method : getCommandHandlers()) {
             var command = method.getAnnotation(Command.class);
             String name = command.name();
-            if (name.equals(messageText)) {
+            if (messageText.startsWith(name)) {
                 try {
-                    method.invoke(this, chatId);
+                    method.invoke(this, message);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     System.err.println(e.getMessage());
                 }
                 return;
             }
         }
-        handleInvalidMessage(chatId, messageText);
+        handleInvalidMessage(message);
     }
 
     protected List<Method> getCommandHandlers() {
@@ -60,5 +59,5 @@ public abstract class Bot implements UpdatesListener {
         return list;
     }
 
-    abstract SendResponse handleInvalidMessage(long chatId, String text);
+    abstract SendResponse handleInvalidMessage(Message message);
 }

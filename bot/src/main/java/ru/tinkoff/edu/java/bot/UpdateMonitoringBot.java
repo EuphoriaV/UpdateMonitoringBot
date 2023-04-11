@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.bot;
 
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
@@ -21,38 +22,38 @@ public class UpdateMonitoringBot extends Bot {
     }
 
     @Command(name = "/help", description = "вывести окно с командами")
-    public SendResponse help(long chatId) {
+    public SendResponse help(Message message) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Method method : getCommandHandlers()) {
             var command = method.getAnnotation(Command.class);
             stringBuilder.append(command.name()).append(" - ").append(command.description()).append("\n");
         }
-        return sendMessage(chatId, stringBuilder.toString());
+        return sendMessage(message.chat().id(), stringBuilder.toString());
     }
 
     @Command(name = "/start", description = "зарегистрировать пользователя")
-    public SendResponse start(long chatId) {
-        return sendMessage(chatId, "Registering user...");
+    public SendResponse start(Message message) {
+        return sendMessage(message.chat().id(), "Registering user...");
     }
 
     @Command(name = "/list", description = "показать список отслеживаемых ссылок")
-    public SendResponse list(long chatId) {
-        return sendMessage(chatId, "Пока что отсутствуют отслеживаемые ссылки");
+    public SendResponse list(Message message) {
+        return sendMessage(message.chat().id(), "Пока что отсутствуют отслеживаемые ссылки");
     }
 
     @Command(name = "/track", description = "начать отслеживание ссылки")
-    public SendResponse track(long chatId) {
-        return sendMessage(chatId, "Tracking link...");
+    public SendResponse track(Message message) {
+        return sendMessage(message.chat().id(), "Tracking link...");
     }
 
     @Command(name = "/untrack", description = "прекратить отслеживание ссылки")
-    public SendResponse untrack(long chatId) {
-        return sendMessage(chatId, "Untracking link...");
+    public SendResponse untrack(Message message) {
+        return sendMessage(message.chat().id(), "Untracking link...");
     }
 
     @Override
-    public SendResponse handleInvalidMessage(long chatId, String text) {
-        return sendMessage(chatId, "Неизвестная команда: " + text);
+    public SendResponse handleInvalidMessage(Message message) {
+        return sendMessage(message.chat().id(), "Неизвестная команда: " + message.text());
     }
 
     private SendResponse sendMessage(long chatId, String text) {
