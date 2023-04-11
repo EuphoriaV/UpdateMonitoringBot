@@ -3,6 +3,8 @@ import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,7 +68,19 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         var res = linkRepository.findUnchecked();
 
         for (String url : set) {
-            assertTrue(res.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
+            assertTrue(res.stream().map(Link::url).noneMatch(url1 -> url1.equals(url)));
+        }
+
+        Set<String> set1 = Set.of("url123", "url224", "url532", "url423");
+        for (String link : set1) {
+            linkRepository.add(new Link(0, link, OffsetDateTime.
+                    of(2020,1,1,1,1,1,1, ZoneOffset.UTC)));
+        }
+
+        var res1 = linkRepository.findUnchecked();
+
+        for (String url : set1) {
+            assertTrue(res1.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
         }
     }
 }
