@@ -1,7 +1,6 @@
 import environment.IntegrationEnvironment;
 import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
-import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
 
 import java.util.Set;
@@ -55,6 +54,6 @@ public class JdbcChatTest extends IntegrationEnvironment {
         var res = chatRepository.findById(chat.id());
 
         assertNotNull(res);
-        assertTrue(res.equals(chat));
+        assertEquals(res, chat);
     }
 }

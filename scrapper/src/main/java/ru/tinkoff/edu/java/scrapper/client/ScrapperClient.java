@@ -20,8 +20,8 @@ public class ScrapperClient {
         this.webClient = WebClient.create(baseUrl);
     }
 
-    public void createChat(long id) {
-        webClient.post().uri("/tg-chat/{id}", id).retrieve().toBodilessEntity().block();
+    public void createChat(long id, String username) {
+        webClient.post().uri("/tg-chat/{id}", id).header("username", username).retrieve().toBodilessEntity().block();
     }
 
     public void deleteChat(long id) {

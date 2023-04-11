@@ -24,7 +24,7 @@ public class GitHubClient {
         try {
             JSONObject obj = new JSONObject(requestRepository(repo.user(), repo.repository()));
             return new RepositoryResponse(obj.getString("full_name"),
-                    OffsetDateTime.parse(obj.getString("updated_at")));
+                    OffsetDateTime.parse(obj.getString("pushed_at")));
         } catch (JSONException e) {
             return null;
         }

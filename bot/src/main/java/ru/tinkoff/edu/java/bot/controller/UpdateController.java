@@ -11,6 +11,7 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdate;
 public class UpdateController {
     @PostMapping
     public void update(@RequestBody LinkUpdate linkUpdate) {
+        System.out.println(linkUpdate);
         //throw new InvalidParametersException("Invalid parameters");
     }
 }

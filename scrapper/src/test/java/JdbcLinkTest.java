@@ -5,8 +5,7 @@ import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcLinkTest extends IntegrationEnvironment {
     private final LinkRepository linkRepository = new LinkRepository(jdbcTemplate);
@@ -42,7 +41,7 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         var res = linkRepository.findAll();
 
         for (String url : set) {
-            res.stream().map(Link::url).anyMatch(url1 -> url1.equals(url));
+            assertTrue(res.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
         }
     }
 
@@ -54,6 +53,20 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         var res = linkRepository.findByUrl(link.url());
 
         assertNotNull(res);
-        assertTrue(res.url().equals(link.url()));
+        assertEquals(res.url(), link.url());
+    }
+
+    @Test
+    public void testFindUnchecked() {
+        Set<String> set = Set.of("url12", "url22", "url32", "url42");
+        for (String link : set) {
+            linkRepository.add(new Link(0, link));
+        }
+
+        var res = linkRepository.findUnchecked();
+
+        for (String url : set) {
+            assertTrue(res.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
+        }
     }
 }

@@ -2,7 +2,7 @@ package ru.tinkoff.edu.java.link_parser;
 
 import java.net.URL;
 
-abstract class Parser {
+public abstract class Parser {
     protected Parser nextParser;
 
     public Parser(Parser nextParser) {

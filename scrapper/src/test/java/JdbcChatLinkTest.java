@@ -10,8 +10,7 @@ import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class JdbcChatLinkTest extends IntegrationEnvironment {
     private final ChatLinkRepository chatLinkRepository = new ChatLinkRepository(jdbcTemplate);
@@ -51,8 +50,8 @@ public class JdbcChatLinkTest extends IntegrationEnvironment {
 
     @Test
     public void testFindAll() {
-        Set<Chat> chats = Set.of(new Chat(37, "Egor"), new Chat(88, "Someone"));
-        Set<Link> links = Set.of(new Link(372, "whaat"), new Link(828, "whaaaaaat"));
+        Set<Chat> chats = Set.of(new Chat(39, "Eor"), new Chat(89, "Soeone"));
+        Set<Link> links = Set.of(new Link(379, "what"), new Link(829, "whaaaaat"));
         for (Link link : links) {
             linkRepository.add(link);
         }
@@ -71,6 +70,62 @@ public class JdbcChatLinkTest extends IntegrationEnvironment {
         var res = chatLinkRepository.findAll();
 
         for (Subscription subscription : set) {
+            assertTrue(res.contains(subscription));
+        }
+    }
+
+    @Test
+    public void testFindAllByChatId() {
+        Set<Chat> chats = Set.of(new Chat(37, "Egor"), new Chat(88, "Someone"));
+        Set<Link> links = Set.of(new Link(372, "whaat"), new Link(828, "whaaaaaat"));
+        for (Link link : links) {
+            linkRepository.add(link);
+        }
+        for (Chat chat : chats) {
+            chatRepository.add(chat);
+        }
+        Set<Subscription> set = new HashSet<>();
+        for (Link link : links) {
+            link = linkRepository.findByUrl(link.url());
+            for (Chat chat : chats) {
+                var sub = new Subscription(chat, link);
+                set.add(sub);
+                chatLinkRepository.add(sub);
+            }
+        }
+        var res = chatLinkRepository.findAllByChatId(37);
+
+        var exp = set.stream().filter(subscription -> subscription.chat().id() == 37).toList();
+        assertEquals(exp.size(), res.size());
+        for (Subscription subscription : exp) {
+            assertTrue(res.contains(subscription));
+        }
+    }
+
+    @Test
+    public void testFindAllByLinkId() {
+        Set<Chat> chats = Set.of(new Chat(372, "E2or"), new Chat(883, "So2meone"));
+        Set<Link> links = Set.of(new Link(3723, "wh1at"), new Link(8284, "whaaaa2at"));
+        for (Link link : links) {
+            linkRepository.add(link);
+        }
+        for (Chat chat : chats) {
+            chatRepository.add(chat);
+        }
+        Set<Subscription> set = new HashSet<>();
+        for (Link link : links) {
+            link = linkRepository.findByUrl(link.url());
+            for (Chat chat : chats) {
+                var sub = new Subscription(chat, link);
+                set.add(sub);
+                chatLinkRepository.add(sub);
+            }
+        }
+        var res = chatLinkRepository.findAllByLinkId(883);
+
+        var exp = set.stream().filter(subscription -> subscription.link().id() == 883).toList();
+        assertEquals(exp.size(), res.size());
+        for (Subscription subscription : exp) {
             assertTrue(res.contains(subscription));
         }
     }
