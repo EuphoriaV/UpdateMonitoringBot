@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import org.springframework.stereotype.Service;
-import ru.tinkoff.edu.java.bot.exceptions.InvalidParametersException;
+import ru.tinkoff.edu.java.scrapper.exceptions.InvalidParametersException;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
@@ -56,7 +56,9 @@ public class JdbcLinkService implements LinkService {
             linkRepository.add(new Link(0, url));
         }
         link = linkRepository.findByUrl(url);
-        chatLinkRepository.add(new Subscription(chat, link));
+        if(!chatLinkRepository.findAllByChatId(chat.id()).stream().map(Subscription::link).toList().contains(link)){
+            chatLinkRepository.add(new Subscription(chat, link));
+        }
         return convert(link);
     }
 

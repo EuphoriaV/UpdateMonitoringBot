@@ -2,7 +2,6 @@ package ru.tinkoff.edu.java.scrapper;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.bot.dto.LinkUpdate;
 import ru.tinkoff.edu.java.link_parser.GitHubRepository;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.link_parser.ParsedObject;
@@ -13,6 +12,7 @@ import ru.tinkoff.edu.java.scrapper.client.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
+import ru.tinkoff.edu.java.scrapper.dto.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.dto.QuestionResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
