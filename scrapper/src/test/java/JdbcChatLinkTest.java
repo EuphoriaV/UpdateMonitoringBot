@@ -3,9 +3,9 @@ import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
-import ru.tinkoff.edu.java.scrapper.database.repository.ChatLinkRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.LinkRepository;
 
 import java.util.HashSet;
 import java.util.Set;

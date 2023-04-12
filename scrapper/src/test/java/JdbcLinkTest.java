@@ -1,7 +1,7 @@
 import environment.IntegrationEnvironment;
 import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
-import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.LinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

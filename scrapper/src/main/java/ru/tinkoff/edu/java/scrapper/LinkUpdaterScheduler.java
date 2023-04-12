@@ -28,7 +28,8 @@ public class LinkUpdaterScheduler {
     private final BotClient botClient;
     private final StackOverflowClient stackOverflowClient;
 
-    public LinkUpdaterScheduler(LinkUpdater linkUpdater, GitHubClient gitHubClient, BotClient botClient, StackOverflowClient stackOverflowClient) {
+    public LinkUpdaterScheduler(LinkUpdater linkUpdater, GitHubClient gitHubClient,
+                                BotClient botClient, StackOverflowClient stackOverflowClient) {
         this.linkUpdater = linkUpdater;
         this.gitHubClient = gitHubClient;
         this.botClient = botClient;
@@ -49,17 +50,27 @@ public class LinkUpdaterScheduler {
                 if (response.pushedAt().compareTo(link.checkedAt()) > -1) {
                     try {
                         botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
-                                "Репозиторий обновился", chats.stream().map(Chat::id).toList()));
+                                "Произошло обновление репозитория '".concat(response.fullName()).concat("'"),
+                                chats.stream().map(Chat::id).toList()));
                     } catch (URISyntaxException e) {
                         throw new RuntimeException(e);
                     }
                 }
             } else if (object instanceof StackOverflowQuestion question) {
                 QuestionResponse response = stackOverflowClient.fetchQuestion(question);
-                if (response.updatedAt().compareTo(link.checkedAt()) > -1) {
+                if (response.closedAt() != null && response.closedAt().compareTo(link.checkedAt()) > -1) {
                     try {
                         botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
-                                "Вопрос обновился", chats.stream().map(Chat::id).toList()));
+                                "Вопрос '".concat(response.title()).concat("' был закрыт "),
+                                chats.stream().map(Chat::id).toList()));
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (response.updatedAt().compareTo(link.checkedAt()) > -1) {
+                    try {
+                        botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
+                                "Произошло обновление вопроса '".concat(response.title()).concat("'"),
+                                chats.stream().map(Chat::id).toList()));
                     } catch (URISyntaxException e) {
                         throw new RuntimeException(e);
                     }

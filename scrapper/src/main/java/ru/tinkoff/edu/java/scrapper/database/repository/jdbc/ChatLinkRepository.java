@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.database.repository;
+package ru.tinkoff.edu.java.scrapper.database.repository.jdbc;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

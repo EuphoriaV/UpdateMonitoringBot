@@ -1,7 +1,7 @@
 import environment.IntegrationEnvironment;
 import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
-import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatRepository;
 
 import java.util.Set;
 

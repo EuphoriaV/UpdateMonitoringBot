@@ -27,9 +27,14 @@ public class StackOverflowClient {
         try {
             JSONObject obj = new JSONObject(requestQuestion(question.id())).
                     getJSONArray("items").getJSONObject(0);
-            return new QuestionResponse(obj.getLong("question_id"), obj.getString("title"),
-                    OffsetDateTime.of(LocalDateTime.ofEpochSecond(obj.getLong("last_activity_date"),
-                            0, ZoneOffset.UTC), ZoneOffset.UTC));
+            long id = obj.getLong("question_id");
+            String title = obj.getString("title");
+            OffsetDateTime updatedAt = OffsetDateTime.of(LocalDateTime.ofEpochSecond(obj.
+                    getLong("last_activity_date"), 0, ZoneOffset.UTC), ZoneOffset.UTC);
+            long closed = obj.optLong("closed_date", -1);
+            OffsetDateTime closedAt = closed == -1 ? null : OffsetDateTime.of(LocalDateTime.ofEpochSecond(
+                    closed, 0, ZoneOffset.UTC), ZoneOffset.UTC);
+            return new QuestionResponse(id, title, updatedAt, closedAt);
         } catch (JSONException e) {
             return null;
         }
