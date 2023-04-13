@@ -3,9 +3,9 @@ import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatLinkRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.LinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,9 +13,9 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class JdbcChatLinkTest extends IntegrationEnvironment {
-    private final ChatLinkRepository chatLinkRepository = new ChatLinkRepository(jdbcTemplate);
-    private final LinkRepository linkRepository = new LinkRepository(jdbcTemplate);
-    private final ChatRepository chatRepository = new ChatRepository(jdbcTemplate);
+    private final JdbcChatLinkRepository chatLinkRepository = new JdbcChatLinkRepository(jdbcTemplate);
+    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate);
+    private final JdbcChatRepository chatRepository = new JdbcChatRepository(jdbcTemplate);
 
     @Test
     public void testAdd() {

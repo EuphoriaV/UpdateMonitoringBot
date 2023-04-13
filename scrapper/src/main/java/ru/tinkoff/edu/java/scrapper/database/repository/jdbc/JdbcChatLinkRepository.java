@@ -12,11 +12,11 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Repository
-public class ChatLinkRepository {
+public class JdbcChatLinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Subscription> rowMapper;
 
-    public ChatLinkRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcChatLinkRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         rowMapper = ((rs, rowNum) -> new Subscription(
                 new Chat(rs.getLong("chat_id"), rs.getString("username")),

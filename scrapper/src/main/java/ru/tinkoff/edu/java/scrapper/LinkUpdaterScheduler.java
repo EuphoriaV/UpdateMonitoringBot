@@ -101,7 +101,7 @@ public class LinkUpdaterScheduler {
     }
 
     private String getCorrectForm(int x) {
-        if (x % 10 >= 2 && x % 10 <= 4 && x % 100 > 14 || x % 100 < 12) {
+        if (x % 10 >= 2 && x % 10 <= 4 && (x % 100 > 14 || x % 100 < 12)) {
             return " раза";
         }
         return " раз";

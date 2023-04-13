@@ -8,11 +8,11 @@ import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import java.util.List;
 
 @Repository
-public class ChatRepository {
+public class JdbcChatRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Chat> rowMapper;
 
-    public ChatRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcChatRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         rowMapper = ((rs, rowNum) -> new Chat(
                 rs.getLong("chat_id"),

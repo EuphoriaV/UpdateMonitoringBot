@@ -10,11 +10,11 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Repository
-public class LinkRepository {
+public class JdbcLinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Link> rowMapper;
 
-    public LinkRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcLinkRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         rowMapper = ((rs, rowNum) -> new Link(
                 rs.getLong("link_id"),

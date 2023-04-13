@@ -1,14 +1,14 @@
 import environment.IntegrationEnvironment;
 import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcChatTest extends IntegrationEnvironment {
-    private final ChatRepository chatRepository = new ChatRepository(jdbcTemplate);
+    private final JdbcChatRepository chatRepository = new JdbcChatRepository(jdbcTemplate);
 
     @Test
     public void testAdd() {

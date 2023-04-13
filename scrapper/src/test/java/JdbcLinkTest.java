@@ -1,7 +1,7 @@
 import environment.IntegrationEnvironment;
 import org.junit.Test;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.LinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcLinkTest extends IntegrationEnvironment {
-    private final LinkRepository linkRepository = new LinkRepository(jdbcTemplate);
+    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate);
 
     @Test
     public void testAdd() {

@@ -5,9 +5,9 @@ import ru.tinkoff.edu.java.scrapper.exceptions.InvalidParametersException;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatLinkRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.LinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
@@ -21,11 +21,11 @@ import java.net.URISyntaxException;
 
 @Service
 public class JdbcLinkService implements LinkService {
-    private final ChatLinkRepository chatLinkRepository;
-    private final LinkRepository linkRepository;
-    private final ChatRepository chatRepository;
+    private final JdbcChatLinkRepository chatLinkRepository;
+    private final JdbcLinkRepository linkRepository;
+    private final JdbcChatRepository chatRepository;
 
-    public JdbcLinkService(ChatLinkRepository chatLinkRepository, LinkRepository linkRepository, ChatRepository chatRepository) {
+    public JdbcLinkService(JdbcChatLinkRepository chatLinkRepository, JdbcLinkRepository linkRepository, JdbcChatRepository chatRepository) {
         this.chatLinkRepository = chatLinkRepository;
         this.linkRepository = linkRepository;
         this.chatRepository = chatRepository;
