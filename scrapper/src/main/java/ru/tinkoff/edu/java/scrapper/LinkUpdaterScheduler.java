@@ -50,23 +50,43 @@ public class LinkUpdaterScheduler {
                 if (response.pushedAt().compareTo(link.checkedAt()) > -1) {
                     try {
                         botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
-                                "Произошло обновление репозитория '".concat(response.fullName()).concat("'"),
-                                chats.stream().map(Chat::id).toList()));
+                                "1 или более коммитов были запушены в репозиторий '".concat(response.fullName()).
+                                        concat("'"), chats.stream().map(Chat::id).toList()));
                     } catch (URISyntaxException e) {
                         throw new RuntimeException(e);
                     }
                 }
             } else if (object instanceof StackOverflowQuestion question) {
+                boolean scenario = false;
                 QuestionResponse response = stackOverflowClient.fetchQuestion(question);
+                var answers = response.answersTime();
+                int countNewAnswers = 0;
+                for (var answer : answers) {
+                    if (answer.compareTo(link.checkedAt()) > -1) {
+                        countNewAnswers++;
+                    }
+                }
+                if (countNewAnswers > 0) {
+                    try {
+                        botClient.update(new LinkUpdate(link.id(), new URI(link.url()), "На вопрос '".
+                                concat(response.title()).concat("' ответили ").concat(String.valueOf(countNewAnswers)).
+                                concat(getCorrectForm(countNewAnswers)), chats.stream().map(Chat::id).toList()));
+                        scenario = true;
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 if (response.closedAt() != null && response.closedAt().compareTo(link.checkedAt()) > -1) {
                     try {
                         botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
                                 "Вопрос '".concat(response.title()).concat("' был закрыт "),
                                 chats.stream().map(Chat::id).toList()));
+                        scenario = true;
                     } catch (URISyntaxException e) {
                         throw new RuntimeException(e);
                     }
-                } else if (response.updatedAt().compareTo(link.checkedAt()) > -1) {
+                }
+                if (response.updatedAt().compareTo(link.checkedAt()) > -1 && !scenario) {
                     try {
                         botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
                                 "Произошло обновление вопроса '".concat(response.title()).concat("'"),
@@ -78,5 +98,12 @@ public class LinkUpdaterScheduler {
             }
         }
         linkUpdater.updateAll(updates.stream().map(Subscription::link).distinct().collect(Collectors.toList()));
+    }
+
+    private String getCorrectForm(int x) {
+        if (x % 10 >= 2 && x % 10 <= 4 && x % 100 > 14 || x % 100 < 12) {
+            return " раза";
+        }
+        return " раз";
     }
 }
