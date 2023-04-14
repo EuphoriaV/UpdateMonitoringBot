@@ -6,13 +6,14 @@ import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
+import ru.tinkoff.edu.java.scrapper.database.repository.ChatLinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
 @Repository
-public class JdbcChatLinkRepository {
+public class JdbcChatLinkRepository implements ChatLinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Subscription> rowMapper;
 

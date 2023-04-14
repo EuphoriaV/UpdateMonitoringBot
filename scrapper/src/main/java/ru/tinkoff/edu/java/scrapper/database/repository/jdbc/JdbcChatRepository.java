@@ -4,11 +4,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
+import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
 
 import java.util.List;
 
 @Repository
-public class JdbcChatRepository {
+public class JdbcChatRepository implements ChatRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Chat> rowMapper;
 

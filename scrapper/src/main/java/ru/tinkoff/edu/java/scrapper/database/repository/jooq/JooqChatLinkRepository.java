@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
+import ru.tinkoff.edu.java.scrapper.database.repository.ChatLinkRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -14,7 +15,7 @@ import java.util.List;
 import static ru.tinkoff.edu.java.scrapper.domain.jooq.Tables.*;
 
 @Repository
-public class JooqChatLinkRepository {
+public class JooqChatLinkRepository implements ChatLinkRepository {
     private final DSLContext dslContext;
 
     public JooqChatLinkRepository(DSLContext dslContext) {
@@ -24,7 +25,7 @@ public class JooqChatLinkRepository {
     private Subscription convert(Record5 record5) {
         return new Subscription(new Chat((int) record5.get("chat_id"), (String) record5.get("username")),
                 new Link((int) record5.get("link_id"), (String) record5.get("url"),
-                        ((LocalDateTime) record5.get("checked_at")).atOffset(ZoneOffset.UTC)));
+                        ((LocalDateTime) record5.get("checked_at")).atOffset(ZoneOffset.ofHours(3))));
     }
 
     public List<Subscription> findAll() {

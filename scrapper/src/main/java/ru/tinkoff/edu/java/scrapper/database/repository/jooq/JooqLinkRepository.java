@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.database.repository.jooq;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
+import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 import static ru.tinkoff.edu.java.scrapper.domain.jooq.Tables.LINKS;
 
 @Repository
-public class JooqLinkRepository {
+public class JooqLinkRepository implements LinkRepository {
     private final DSLContext dslContext;
 
     public JooqLinkRepository(DSLContext dslContext) {

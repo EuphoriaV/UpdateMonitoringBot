@@ -3,13 +3,14 @@ package ru.tinkoff.edu.java.scrapper.database.repository.jooq;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
+import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
 
 import java.util.List;
 
 import static ru.tinkoff.edu.java.scrapper.domain.jooq.Tables.CHATS;
 
 @Repository
-public class JooqChatRepository {
+public class JooqChatRepository implements ChatRepository {
     private final DSLContext dslContext;
 
     public JooqChatRepository(DSLContext dslContext) {

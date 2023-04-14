@@ -4,13 +4,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
+import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
 @Repository
-public class JdbcLinkRepository {
+public class JdbcLinkRepository implements LinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Link> rowMapper;
 
