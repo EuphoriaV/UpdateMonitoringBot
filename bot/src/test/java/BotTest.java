@@ -15,7 +15,7 @@ public class BotTest {
 
     @BeforeAll
     public static void init() {
-        bot = new UpdateMonitoringBot("6234901711:AAHmMi5qffPndtmBXd0j6YFDKs9zH-7hBxA");
+        bot = new UpdateMonitoringBot("6234901711:AAHmMi5qffPndtmBXd0j6YFDKs9zH-7hBxA", null);
         testChatId = 795253839;
     }
 

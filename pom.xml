@@ -12,6 +12,7 @@
         <module>link-parser</module>
         <module>scrapper</module>
         <module>bot</module>
+        <module>scrapper-jooq</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
