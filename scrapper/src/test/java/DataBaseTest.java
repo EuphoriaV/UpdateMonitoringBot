@@ -16,7 +16,7 @@ public class DataBaseTest extends IntegrationEnvironment {
             Connection connection = container.createConnection("");
             PreparedStatement statement = connection.prepareStatement("select * from links");
             var resultSet = statement.executeQuery();
-            Set<String> linkFields = Set.of("link_id", "url");
+            Set<String> linkFields = Set.of("link_id", "url", "checked_at");
             assertEquals(resultSet.getMetaData().getColumnCount(), linkFields.size());
             for (int i = 1; i <= linkFields.size(); i++) {
                 assertTrue(linkFields.contains(resultSet.getMetaData().getColumnName(i)));
