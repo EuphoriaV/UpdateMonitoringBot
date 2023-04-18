@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class JdbcChatLinkTest extends IntegrationEnvironment {
     private final JdbcChatLinkRepository chatLinkRepository = new JdbcChatLinkRepository(jdbcTemplate);
-    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate);
+    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate, 300);
     private final JdbcChatRepository chatRepository = new JdbcChatRepository(jdbcTemplate);
 
     @Test

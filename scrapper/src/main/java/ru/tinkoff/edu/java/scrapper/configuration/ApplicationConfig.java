@@ -7,5 +7,5 @@ import ru.tinkoff.edu.java.scrapper.dto.Scheduler;
 
 @Validated
 @ConfigurationProperties(prefix = "scrapper", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull Scheduler scheduler) {
+public record ApplicationConfig(@NotNull Scheduler scheduler, @NotNull Long updateInterval) {
 }

@@ -14,9 +14,11 @@ import static ru.tinkoff.edu.java.scrapper.domain.jooq.Tables.LINKS;
 @Repository
 public class JooqLinkRepository implements LinkRepository {
     private final DSLContext dslContext;
+    private final long updateInterval;
 
-    public JooqLinkRepository(DSLContext dslContext) {
+    public JooqLinkRepository(DSLContext dslContext, long updateInterval) {
         this.dslContext = dslContext;
+        this.updateInterval = updateInterval;
     }
 
     public List<Link> findAll() {
@@ -24,7 +26,8 @@ public class JooqLinkRepository implements LinkRepository {
     }
 
     public Link findByUrl(String url) {
-        var res = dslContext.select(LINKS.fields()).from(LINKS).where(LINKS.URL.eq(url)).fetchInto(Link.class);
+        var res = dslContext.select(LINKS.fields()).from(LINKS).
+                where(LINKS.URL.eq(url)).limit(1).fetchInto(Link.class);
         return res.size() == 0 ? null : res.get(0);
     }
 
@@ -35,7 +38,7 @@ public class JooqLinkRepository implements LinkRepository {
 
     public List<Link> findUnchecked() {
         return findAll().stream().filter(link ->
-                OffsetDateTime.now().toEpochSecond() - link.checkedAt().toEpochSecond() > 300).toList();
+                OffsetDateTime.now().toEpochSecond() - link.checkedAt().toEpochSecond() > updateInterval).toList();
     }
 
     public void remove(Link link) {

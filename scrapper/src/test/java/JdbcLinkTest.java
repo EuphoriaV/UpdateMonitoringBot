@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcLinkTest extends IntegrationEnvironment {
-    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate);
+    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate, 300);
 
     @Test
     public void testAdd() {
