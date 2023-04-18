@@ -1,86 +1,97 @@
-import environment.IntegrationEnvironment;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JdbcLinkTest extends IntegrationEnvironment {
-    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate, 300);
+@SpringBootTest(classes = ScrapperApplication.class)
+@Import(TestConfig.class)
+public class JdbcLinkTest {
+    @Autowired
+    private JdbcLinkRepository linkRepository;
 
     @Test
+    @Transactional
     public void testAdd() {
-        Link link = new Link(123123123, "url5");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
 
-        var res = linkRepository.findAll();
+        var res = linkRepository.findByUrl(link.url());
 
-        assertTrue(res.stream().map(Link::url).anyMatch(url -> url.equals(link.url())));
+        assertEquals(res.url(), res.url());
     }
 
     @Test
+    @Transactional
     public void testRemove() {
-        Link link = new Link(1231231232, "url6");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
         linkRepository.remove(link);
 
         var res = linkRepository.findAll();
 
-        assertTrue(res.stream().map(Link::url).noneMatch(url -> url.equals(link.url())));
+        assertEquals(res.size(), 0);
     }
 
     @Test
+    @Transactional
     public void testFindAll() {
-        Set<String> set = Set.of("url1", "url2", "url3", "url4");
-        for (String link : set) {
-            linkRepository.add(new Link(0, link));
-        }
+        Link link1 = new Link(1, "url1");
+        Link link2 = new Link(2, "url2");
+        linkRepository.add(link1);
+        linkRepository.add(link2);
 
-        var res = linkRepository.findAll();
+        var res = linkRepository.findAll().stream().map(Link::url).toList();
 
-        for (String url : set) {
-            assertTrue(res.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
-        }
+        assertEquals(res.size(), 2);
+        assertTrue(res.contains(link1.url()));
+        assertTrue(res.contains(link2.url()));
     }
 
     @Test
+    @Transactional
     public void testFindByUrl() {
-        Link link = new Link(1200, "url7");
+        Link link = new Link(1, "url1");
         linkRepository.add(link);
 
         var res = linkRepository.findByUrl(link.url());
 
-        assertNotNull(res);
         assertEquals(res.url(), link.url());
     }
 
     @Test
+    @Transactional
     public void testFindUnchecked() {
-        Set<String> set = Set.of("url12", "url22", "url32", "url42");
-        for (String link : set) {
-            linkRepository.add(new Link(0, link));
-        }
+        Link link1 = new Link(1, "url1");
+        Link link2 = new Link(2, "url2", OffsetDateTime.
+                of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
+        linkRepository.add(link1);
+        linkRepository.add(link2);
 
         var res = linkRepository.findUnchecked();
 
-        for (String url : set) {
-            assertTrue(res.stream().map(Link::url).noneMatch(url1 -> url1.equals(url)));
-        }
+        assertEquals(res.size(), 1);
+        assertEquals(res.get(0).url(), link2.url());
+    }
 
-        Set<String> set1 = Set.of("url123", "url224", "url532", "url423");
-        for (String link : set1) {
-            linkRepository.add(new Link(0, link, OffsetDateTime.
-                    of(2020,1,1,1,1,1,1, ZoneOffset.UTC)));
-        }
+    @Test
+    @Transactional
+    public void testUpdateTime() {
+        Link link = new Link(1, "url1", OffsetDateTime.
+                of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
 
-        var res1 = linkRepository.findUnchecked();
+        linkRepository.updateTime(link);
+        var res = linkRepository.findUnchecked();
 
-        for (String url : set1) {
-            assertTrue(res1.stream().map(Link::url).anyMatch(url1 -> url1.equals(url)));
-        }
+        assertEquals(res.size(), 0);
     }
 }

@@ -1,5 +1,10 @@
 import environment.IntegrationEnvironment;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
@@ -7,20 +12,24 @@ import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatLinkReposit
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.*;
-
+@SpringBootTest(classes = ScrapperApplication.class)
+@Import(TestConfig.class)
 public class JdbcChatLinkTest extends IntegrationEnvironment {
-    private final JdbcChatLinkRepository chatLinkRepository = new JdbcChatLinkRepository(jdbcTemplate);
-    private final JdbcLinkRepository linkRepository = new JdbcLinkRepository(jdbcTemplate, 300);
-    private final JdbcChatRepository chatRepository = new JdbcChatRepository(jdbcTemplate);
+    @Autowired
+    private JdbcChatLinkRepository chatLinkRepository;
+    @Autowired
+    private JdbcLinkRepository linkRepository;
+    @Autowired
+    private JdbcChatRepository chatRepository;
 
     @Test
+    @Transactional
     public void testAdd() {
-        Chat chat = new Chat(35, "Sanya");
-        Link link = new Link(0, "urlurl");
+        Chat chat = new Chat(1, "Ilya");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
         chatRepository.add(chat);
         link = linkRepository.findByUrl(link.url());
@@ -29,13 +38,15 @@ public class JdbcChatLinkTest extends IntegrationEnvironment {
 
         var res = chatLinkRepository.findAll();
 
+        assertEquals(res.size(), 1);
         assertTrue(res.contains(subscription));
     }
 
     @Test
+    @Transactional
     public void testRemove() {
-        Chat chat = new Chat(36, "Vanya");
-        Link link = new Link(0, "urlurlurl");
+        Chat chat = new Chat(1, "Ilya");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
         chatRepository.add(chat);
         link = linkRepository.findByUrl(link.url());
@@ -45,88 +56,77 @@ public class JdbcChatLinkTest extends IntegrationEnvironment {
 
         var res = chatLinkRepository.findAll();
 
-        assertFalse(res.contains(subscription));
+        assertEquals(res.size(), 0);
     }
 
     @Test
+    @Transactional
     public void testFindAll() {
-        Set<Chat> chats = Set.of(new Chat(39, "Eor"), new Chat(89, "Soeone"));
-        Set<Link> links = Set.of(new Link(379, "what"), new Link(829, "whaaaaat"));
-        for (Link link : links) {
-            linkRepository.add(link);
-        }
-        for (Chat chat : chats) {
-            chatRepository.add(chat);
-        }
-        Set<Subscription> set = new HashSet<>();
-        for (Link link : links) {
-            link = linkRepository.findByUrl(link.url());
-            for (Chat chat : chats) {
-                var sub = new Subscription(chat, link);
-                set.add(sub);
-                chatLinkRepository.add(sub);
-            }
-        }
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
+        linkRepository.add(link1);
+        linkRepository.add(link2);
+        chatRepository.add(chat1);
+        chatRepository.add(chat2);
+        link1 = linkRepository.findByUrl(link1.url());
+        link2 = linkRepository.findByUrl(link2.url());
+        Subscription subscription1 = new Subscription(chat1, link1);
+        Subscription subscription2 = new Subscription(chat2, link2);
+        chatLinkRepository.add(subscription1);
+        chatLinkRepository.add(subscription2);
+
         var res = chatLinkRepository.findAll();
 
-        for (Subscription subscription : set) {
-            assertTrue(res.contains(subscription));
-        }
+        assertEquals(res.size(), 2);
+        assertTrue(res.contains(subscription1));
+        assertTrue(res.contains(subscription2));
     }
 
     @Test
+    @Transactional
     public void testFindAllByChatId() {
-        Set<Chat> chats = Set.of(new Chat(37, "Egor"), new Chat(88, "Someone"));
-        Set<Link> links = Set.of(new Link(372, "whaat"), new Link(828, "whaaaaaat"));
-        for (Link link : links) {
-            linkRepository.add(link);
-        }
-        for (Chat chat : chats) {
-            chatRepository.add(chat);
-        }
-        Set<Subscription> set = new HashSet<>();
-        for (Link link : links) {
-            link = linkRepository.findByUrl(link.url());
-            for (Chat chat : chats) {
-                var sub = new Subscription(chat, link);
-                set.add(sub);
-                chatLinkRepository.add(sub);
-            }
-        }
-        var res = chatLinkRepository.findAllByChatId(37);
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
+        linkRepository.add(link1);
+        linkRepository.add(link2);
+        chatRepository.add(chat1);
+        chatRepository.add(chat2);
+        link1 = linkRepository.findByUrl(link1.url());
+        link2 = linkRepository.findByUrl(link2.url());
+        Subscription subscription1 = new Subscription(chat1, link1);
+        Subscription subscription2 = new Subscription(chat2, link2);
+        chatLinkRepository.add(subscription1);
+        chatLinkRepository.add(subscription2);
 
-        var exp = set.stream().filter(subscription -> subscription.chat().id() == 37).toList();
-        assertEquals(exp.size(), res.size());
-        for (Subscription subscription : exp) {
-            assertTrue(res.contains(subscription));
-        }
+        var res = chatLinkRepository.findAllByChatId(chat2.id());
+        assertEquals(res.size(), 1);
+        assertTrue(res.contains(subscription2));
     }
 
     @Test
+    @Transactional
     public void testFindAllByLinkId() {
-        Set<Chat> chats = Set.of(new Chat(372, "E2or"), new Chat(883, "So2meone"));
-        Set<Link> links = Set.of(new Link(3723, "wh1at"), new Link(8284, "whaaaa2at"));
-        for (Link link : links) {
-            linkRepository.add(link);
-        }
-        for (Chat chat : chats) {
-            chatRepository.add(chat);
-        }
-        Set<Subscription> set = new HashSet<>();
-        for (Link link : links) {
-            link = linkRepository.findByUrl(link.url());
-            for (Chat chat : chats) {
-                var sub = new Subscription(chat, link);
-                set.add(sub);
-                chatLinkRepository.add(sub);
-            }
-        }
-        var res = chatLinkRepository.findAllByLinkId(883);
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
+        linkRepository.add(link1);
+        linkRepository.add(link2);
+        chatRepository.add(chat1);
+        chatRepository.add(chat2);
+        link1 = linkRepository.findByUrl(link1.url());
+        link2 = linkRepository.findByUrl(link2.url());
+        Subscription subscription1 = new Subscription(chat1, link1);
+        Subscription subscription2 = new Subscription(chat2, link2);
+        chatLinkRepository.add(subscription1);
+        chatLinkRepository.add(subscription2);
 
-        var exp = set.stream().filter(subscription -> subscription.link().id() == 883).toList();
-        assertEquals(exp.size(), res.size());
-        for (Subscription subscription : exp) {
-            assertTrue(res.contains(subscription));
-        }
+        var res = chatLinkRepository.findAllByLinkId(link2.id());
+        assertEquals(res.size(), 1);
+        assertTrue(res.contains(subscription2));
     }
 }

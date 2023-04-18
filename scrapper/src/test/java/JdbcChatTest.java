@@ -1,59 +1,66 @@
-import environment.IntegrationEnvironment;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JdbcChatTest extends IntegrationEnvironment {
-    private final JdbcChatRepository chatRepository = new JdbcChatRepository(jdbcTemplate);
+@SpringBootTest(classes = ScrapperApplication.class)
+@Import(TestConfig.class)
+public class JdbcChatTest {
+    @Autowired
+    private JdbcChatRepository chatRepository;
 
     @Test
+    @Transactional
     public void testAdd() {
-        Chat chat = new Chat(123123123, "Ilya");
+        Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
 
         var res = chatRepository.findAll();
 
-        assertTrue(res.contains(chat));
+        assertEquals(res.get(0), chat);
     }
 
     @Test
+    @Transactional
     public void testRemove() {
-        Chat chat = new Chat(1231, "Fedor");
+        Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
         chatRepository.remove(chat);
 
         var res = chatRepository.findAll();
 
-        assertFalse(res.contains(chat));
+        assertEquals(res.size(), 0);
     }
 
     @Test
+    @Transactional
     public void testFindAll() {
-        Set<Chat> set = Set.of(new Chat(123, "Misha"), new Chat(1234, "Masha"),
-                new Chat(12345, "Pasha"), new Chat(123456, "Sasha"));
-        for (Chat chat : set) {
-            chatRepository.add(chat);
-        }
+        Chat chat1 = new Chat(1, "Ilya");
+        chatRepository.add(chat1);
+        Chat chat2 = new Chat(2, "Fedya");
+        chatRepository.add(chat2);
 
         var res = chatRepository.findAll();
 
-        for (Chat chat : set) {
-            assertTrue(res.contains(chat));
-        }
+        assertEquals(res.size(), 2);
+        assertTrue(res.contains(chat1));
+        assertTrue(res.contains(chat2));
     }
 
     @Test
+    @Transactional
     public void testFindById() {
-        Chat chat = new Chat(1200, "Ktoto");
+        Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
 
         var res = chatRepository.findById(chat.id());
 
-        assertNotNull(res);
         assertEquals(res, chat);
     }
 }
