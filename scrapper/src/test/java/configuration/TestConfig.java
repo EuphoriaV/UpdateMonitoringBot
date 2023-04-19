@@ -1,3 +1,5 @@
+package configuration;
+
 import environment.IntegrationEnvironment;
 import lombok.SneakyThrows;
 import org.springframework.boot.test.context.TestConfiguration;

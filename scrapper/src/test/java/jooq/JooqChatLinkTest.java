@@ -1,4 +1,6 @@
-import environment.IntegrationEnvironment;
+package jooq;
+
+import configuration.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,22 +10,22 @@ import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatLinkRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
-import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jooq.JooqChatLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jooq.JooqChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jooq.JooqLinkRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ScrapperApplication.class)
 @Import(TestConfig.class)
-public class JdbcChatLinkTest extends IntegrationEnvironment {
+public class JooqChatLinkTest {
     @Autowired
-    private JdbcChatLinkRepository chatLinkRepository;
+    private JooqChatLinkRepository chatLinkRepository;
     @Autowired
-    private JdbcLinkRepository linkRepository;
+    private JooqLinkRepository linkRepository;
     @Autowired
-    private JdbcChatRepository chatRepository;
+    private JooqChatRepository chatRepository;
 
     @Test
     @Transactional
