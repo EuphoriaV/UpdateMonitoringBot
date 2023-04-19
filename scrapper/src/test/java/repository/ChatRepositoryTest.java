@@ -1,26 +1,40 @@
-package jdbc;
+package repository;
 
 import configuration.TestConfig;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
+import ru.tinkoff.edu.java.scrapper.database.repository.ChatRepository;
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jooq.JooqChatRepository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ScrapperApplication.class)
 @Import(TestConfig.class)
-public class JdbcChatTest {
+public class ChatRepositoryTest {
     @Autowired
-    private JdbcChatRepository chatRepository;
+    private JdbcChatRepository jdbcChatRepository;
+    @Autowired
+    private JooqChatRepository jooqChatRepository;
 
-    @Test
+    public List<ChatRepository> repos() {
+        return List.of(jdbcChatRepository, jooqChatRepository);
+    }
+
     @Transactional
-    public void testAdd() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testAdd(int index) {
+        ChatRepository chatRepository = repos().get(index);
         Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
 
@@ -29,9 +43,11 @@ public class JdbcChatTest {
         assertEquals(res.get(0), chat);
     }
 
-    @Test
     @Transactional
-    public void testRemove() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testRemove(int index) {
+        ChatRepository chatRepository = repos().get(index);
         Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
         chatRepository.remove(chat);
@@ -41,9 +57,11 @@ public class JdbcChatTest {
         assertEquals(res.size(), 0);
     }
 
-    @Test
     @Transactional
-    public void testFindAll() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testFindAll(int index) {
+        ChatRepository chatRepository = repos().get(index);
         Chat chat1 = new Chat(1, "Ilya");
         chatRepository.add(chat1);
         Chat chat2 = new Chat(2, "Fedya");
@@ -56,9 +74,11 @@ public class JdbcChatTest {
         assertTrue(res.contains(chat2));
     }
 
-    @Test
     @Transactional
-    public void testFindById() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testFindById(int index) {
+        ChatRepository chatRepository = repos().get(index);
         Chat chat = new Chat(1, "Ilya");
         chatRepository.add(chat);
 

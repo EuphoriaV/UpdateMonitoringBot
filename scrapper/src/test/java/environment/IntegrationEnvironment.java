@@ -31,7 +31,7 @@ public abstract class IntegrationEnvironment {
                     new JdbcConnection(connection));
             liquibase.update();
             jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(
-                    container.createConnection(""), false));
+                    container.createConnection(""), true));
         } catch (SQLException | LiquibaseException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }

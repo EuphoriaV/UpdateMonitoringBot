@@ -13,6 +13,6 @@ public class TestConfig extends IntegrationEnvironment {
     @SneakyThrows
     @Bean
     public DataSource dataSource() {
-        return new SingleConnectionDataSource(container.createConnection(""), false);
+        return new SingleConnectionDataSource(container.createConnection(""), true);
     }
 }

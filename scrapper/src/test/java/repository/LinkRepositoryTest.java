@@ -1,30 +1,42 @@
-package jdbc;
+package repository;
 
 import configuration.TestConfig;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
+import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 import ru.tinkoff.edu.java.scrapper.database.repository.jdbc.JdbcLinkRepository;
+import ru.tinkoff.edu.java.scrapper.database.repository.jooq.JooqLinkRepository;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ScrapperApplication.class)
 @Import(TestConfig.class)
-public class JdbcLinkTest {
+public class LinkRepositoryTest {
     @Autowired
-    private JdbcLinkRepository linkRepository;
+    private JooqLinkRepository jooqLinkRepository;
+    @Autowired
+    private JdbcLinkRepository jdbcLinkRepository;
 
-    @Test
+    public List<LinkRepository> repos() {
+        return List.of(jdbcLinkRepository, jooqLinkRepository);
+    }
+
     @Transactional
-    public void testAdd() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testAdd(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link = new Link(1, "url");
         linkRepository.add(link);
 
@@ -33,9 +45,11 @@ public class JdbcLinkTest {
         assertEquals(res.url(), res.url());
     }
 
-    @Test
     @Transactional
-    public void testRemove() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testRemove(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link = new Link(1, "url");
         linkRepository.add(link);
         linkRepository.remove(link);
@@ -45,9 +59,11 @@ public class JdbcLinkTest {
         assertEquals(res.size(), 0);
     }
 
-    @Test
     @Transactional
-    public void testFindAll() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testFindAll(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link1 = new Link(1, "url1");
         Link link2 = new Link(2, "url2");
         linkRepository.add(link1);
@@ -60,9 +76,11 @@ public class JdbcLinkTest {
         assertTrue(res.contains(link2.url()));
     }
 
-    @Test
     @Transactional
-    public void testFindByUrl() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testFindByUrl(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link = new Link(1, "url1");
         linkRepository.add(link);
 
@@ -71,9 +89,11 @@ public class JdbcLinkTest {
         assertEquals(res.url(), link.url());
     }
 
-    @Test
     @Transactional
-    public void testFindUnchecked() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testFindUnchecked(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link1 = new Link(1, "url1");
         Link link2 = new Link(2, "url2", OffsetDateTime.
                 of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
@@ -86,9 +106,11 @@ public class JdbcLinkTest {
         assertEquals(res.get(0).url(), link2.url());
     }
 
-    @Test
     @Transactional
-    public void testUpdateTime() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    public void testUpdateTime(int index) {
+        LinkRepository linkRepository = repos().get(index);
         Link link = new Link(1, "url1", OffsetDateTime.
                 of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
 
