@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.database.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.database.repository.jpa.JpaChatRepository;
+import ru.tinkoff.edu.java.scrapper.exceptions.ChatDoesntExistException;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
 @Service
@@ -16,15 +17,19 @@ public class JpaChatService implements ChatService {
     }
 
     public void registerChat(long id, String username) {
-        Chat chat = new Chat();
-        chat.setId(id);
-        chat.setUsername(username);
-        jpaChatRepository.save(chat);
+        if (!jpaChatRepository.existsById(id)) {
+            Chat chat = new Chat();
+            chat.setId(id);
+            chat.setUsername(username);
+            jpaChatRepository.save(chat);
+        }
     }
 
     public void unregisterChat(long id) {
-        Chat chat = new Chat();
-        chat.setId(id);
+        Chat chat = jpaChatRepository.findById(id).orElse(null);
+        if (chat == null) {
+            throw new ChatDoesntExistException("Chat with id " + id + " doesn't exist");
+        }
         jpaChatRepository.delete(chat);
     }
 }

@@ -61,8 +61,12 @@ public class JpaLinkService implements LinkService {
         if (link.getChats() == null) {
             link.setChats(new ArrayList<>());
         }
+        if (chat.getLinks() == null) {
+            chat.setLinks(new ArrayList<>());
+        }
         if (!link.getChats().contains(chat)) {
             link.getChats().add(chat);
+            chat.getLinks().add(link);
         }
         jpaLinkRepository.save(link);
         jpaChatRepository.save(chat);
