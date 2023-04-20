@@ -2,8 +2,8 @@ package ru.tinkoff.edu.java.scrapper.database.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "chats")
@@ -19,7 +19,7 @@ public class Chat {
     @JoinTable(name = "chat_link",
             joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "link_id"))
-    private List<Link> links;
+    private Set<Link> links;
 
     public long getId() {
         return id;
@@ -37,11 +37,11 @@ public class Chat {
         this.username = username;
     }
 
-    public List<Link> getLinks() {
+    public Set<Link> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(Set<Link> links) {
         this.links = links;
     }
 

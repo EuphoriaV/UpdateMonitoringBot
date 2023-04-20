@@ -3,8 +3,8 @@ package ru.tinkoff.edu.java.scrapper.database.entity;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "links")
@@ -21,7 +21,7 @@ public class Link {
     @JoinTable(name = "chat_link",
             joinColumns = @JoinColumn(name = "link_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
-    private List<Chat> chats;
+    private Set<Chat> chats;
 
     @Column(name = "checked_at")
     private OffsetDateTime checkedAt;
@@ -42,11 +42,11 @@ public class Link {
         this.url = url;
     }
 
-    public List<Chat> getChats() {
+    public Set<Chat> getChats() {
         return chats;
     }
 
-    public void setChats(List<Chat> chats) {
+    public void setChats(Set<Chat> chats) {
         this.chats = chats;
     }
 
