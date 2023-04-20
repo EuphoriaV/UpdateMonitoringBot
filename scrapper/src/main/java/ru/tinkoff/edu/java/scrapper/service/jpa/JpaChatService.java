@@ -1,14 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.database.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.database.repository.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.exceptions.ChatDoesntExistException;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
-@Service
-@Primary
 public class JpaChatService implements ChatService {
     private final JpaChatRepository jpaChatRepository;
 

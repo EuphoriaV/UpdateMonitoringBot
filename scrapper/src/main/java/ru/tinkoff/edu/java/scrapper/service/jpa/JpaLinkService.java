@@ -1,7 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.scrapper.database.entity.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.jpa.JpaChatRepository;
@@ -20,8 +18,6 @@ import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
-@Service
-@Primary
 public class JpaLinkService implements LinkService {
     private final JpaLinkRepository jpaLinkRepository;
     private final JpaChatRepository jpaChatRepository;
@@ -58,17 +54,12 @@ public class JpaLinkService implements LinkService {
             jpaLinkRepository.save(link);
             link = jpaLinkRepository.findByUrl(url);
         }
-        if (link.getChats() == null) {
-            link.setChats(new ArrayList<>());
-        }
         if (chat.getLinks() == null) {
             chat.setLinks(new ArrayList<>());
         }
-        if (!link.getChats().contains(chat)) {
-            link.getChats().add(chat);
+        if (!chat.getLinks().contains(link)) {
             chat.getLinks().add(link);
         }
-        jpaLinkRepository.save(link);
         jpaChatRepository.save(chat);
         return convert(link);
     }

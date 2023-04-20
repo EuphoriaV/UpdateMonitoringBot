@@ -1,7 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
 import ru.tinkoff.edu.java.scrapper.database.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.database.entity.Link;
@@ -12,8 +10,6 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Primary
 public class JpaLinkUpdater implements LinkUpdater {
     private final JpaLinkRepository jpaLinkRepository;
 

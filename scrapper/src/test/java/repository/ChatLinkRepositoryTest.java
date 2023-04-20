@@ -26,8 +26,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(classes = ScrapperApplication.class)
-@Import(TestConfig.class)
+@SpringBootTest(classes = {ScrapperApplication.class, TestConfig.class})
 public class ChatLinkRepositoryTest {
     @Autowired
     private JooqChatLinkRepository jooqChatLinkRepository;
