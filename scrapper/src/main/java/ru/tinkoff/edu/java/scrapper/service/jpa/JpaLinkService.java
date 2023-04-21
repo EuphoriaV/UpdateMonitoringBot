@@ -16,7 +16,6 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
-import java.util.HashSet;
 
 public class JpaLinkService implements LinkService {
     private final JpaLinkRepository jpaLinkRepository;
@@ -54,16 +53,8 @@ public class JpaLinkService implements LinkService {
             jpaLinkRepository.save(link);
             link = jpaLinkRepository.findByUrl(url);
         }
-        if (chat.getLinks() == null) {
-            chat.setLinks(new HashSet<>());
-        }
-        if (link.getChats() == null) {
-            link.setChats(new HashSet<>());
-        }
-        if (!chat.getLinks().contains(link)) {
-            chat.getLinks().add(link);
-            link.getChats().add(chat);
-        }
+        chat.getLinks().add(link);
+        link.getChats().add(chat);
         jpaChatRepository.save(chat);
         jpaLinkRepository.save(link);
         return convert(link);
@@ -80,7 +71,9 @@ public class JpaLinkService implements LinkService {
             throw new LinkNotFoundException("Link not found: " + url);
         }
         chat.getLinks().remove(link);
+        link.getChats().remove(chat);
         jpaChatRepository.save(chat);
+        jpaLinkRepository.save(link);
         return convert(link);
     }
 

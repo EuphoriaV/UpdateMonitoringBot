@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.database.entity;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,11 +18,8 @@ public class Link {
     @Column(name = "url")
     private String url;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chat_link",
-            joinColumns = @JoinColumn(name = "link_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id"))
-    private Set<Chat> chats;
+    @ManyToMany(mappedBy = "links", fetch = FetchType.EAGER)
+    private Set<Chat> chats = new HashSet<>();
 
     @Column(name = "checked_at")
     private OffsetDateTime checkedAt;
