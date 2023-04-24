@@ -15,6 +15,6 @@ create table chat_link
 (
     chat_id integer,
     link_id integer,
-    foreign key (link_id) references links (link_id),
-    foreign key (chat_id) references chats (chat_id)
+    foreign key (link_id) references links (link_id) on delete cascade,
+    foreign key (chat_id) references chats (chat_id) on delete cascade
 );

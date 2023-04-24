@@ -15,8 +15,11 @@ public class JdbcLinkRepository implements LinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Link> rowMapper;
 
-    public JdbcLinkRepository(JdbcTemplate jdbcTemplate) {
+    private final long updateInterval;
+
+    public JdbcLinkRepository(JdbcTemplate jdbcTemplate, long updateInterval) {
         this.jdbcTemplate = jdbcTemplate;
+        this.updateInterval = updateInterval;
         rowMapper = ((rs, rowNum) -> new Link(
                 rs.getLong("link_id"),
                 rs.getString("url"),
@@ -30,7 +33,7 @@ public class JdbcLinkRepository implements LinkRepository {
     }
 
     public Link findByUrl(String url) {
-        String sql = "select * from links where url = ?";
+        String sql = "select * from links where url = ? limit 1";
         var res = jdbcTemplate.query(sql, rowMapper, url);
         return res.size() > 0 ? res.get(0) : null;
     }
@@ -41,7 +44,7 @@ public class JdbcLinkRepository implements LinkRepository {
     }
 
     public List<Link> findUnchecked() {
-        String sql = "select * from links where checked_at < now() - interval '5 minutes'";
+        String sql = "select * from links where checked_at < now() - interval '" + updateInterval + " seconds'";
         return jdbcTemplate.query(sql, rowMapper);
     }
 

@@ -27,7 +27,7 @@ public class JdbcChatRepository implements ChatRepository {
     }
 
     public Chat findById(long id) {
-        String sql = "select * from chats where chat_id = ?";
+        String sql = "select * from chats where chat_id = ? limit 1";
         var res = jdbcTemplate.query(sql, rowMapper, id);
         return res.size() > 0 ? res.get(0) : null;
     }

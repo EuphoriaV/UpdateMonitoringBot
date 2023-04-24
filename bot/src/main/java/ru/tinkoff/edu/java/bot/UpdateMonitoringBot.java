@@ -8,6 +8,7 @@ import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.annotation.Command;
+import ru.tinkoff.edu.java.link_parser.LinkParser;
 import ru.tinkoff.edu.java.scrapper.client.ScrapperClient;
 import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
@@ -66,6 +67,9 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /track 'ссылка'");
         }
         String url = words[1];
+        if(LinkParser.parseLink(url) == null){
+            return sendMessage(chatId, "Ссылка невалидная");
+        }
         try {
             scrapperClient.addLink(chatId, new AddLinkRequest(new URI(url)));
             return sendMessage(chatId, "Ссылка теперь отслеживается");
@@ -82,6 +86,9 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /untrack 'ссылка'");
         }
         String url = words[1];
+        if(LinkParser.parseLink(url) == null){
+            return sendMessage(chatId, "Ссылка невалидная");
+        }
         try {
             scrapperClient.deleteLink(chatId, new RemoveLinkRequest(new URI(url)));
             return sendMessage(chatId, "Ссылка теперь не отслеживается");
