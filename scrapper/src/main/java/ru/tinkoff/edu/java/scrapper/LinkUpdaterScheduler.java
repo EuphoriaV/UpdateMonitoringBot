@@ -7,7 +7,7 @@ import ru.tinkoff.edu.java.link_parser.ParsedObject;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
-import ru.tinkoff.edu.java.scrapper.update_handler.CommonUpdateHandler;
+import ru.tinkoff.edu.java.scrapper.service.update_handler.CommonUpdateHandler;
 
 import java.util.stream.Collectors;
 

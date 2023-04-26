@@ -9,5 +9,6 @@ import ru.tinkoff.edu.java.scrapper.dto.Scheduler;
 @Validated
 @ConfigurationProperties(prefix = "scrapper", ignoreUnknownFields = false)
 public record ApplicationConfig(@NotNull Scheduler scheduler, @NotNull Long updateInterval,
-                                @NotNull AccessType databaseAccessType) {
+                                @NotNull AccessType databaseAccessType, @NotNull String queueName,
+                                @NotNull String exchangeName, boolean useQueue) {
 }

@@ -1,6 +1,6 @@
-package ru.tinkoff.edu.java.scrapper.update_handler;
+package ru.tinkoff.edu.java.scrapper.service.update_handler;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.link_parser.GitHubRepository;
 import ru.tinkoff.edu.java.link_parser.ParsedObject;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
@@ -9,7 +9,7 @@ import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 
 import java.util.List;
 
-@Component
+@Service
 public class CommonUpdateHandler implements UpdateHandler {
     private final GitHubUpdateHandler gitHubUpdateHandler;
     private final StackOverflowUpdateHandler stackOverflowUpdateHandler;
