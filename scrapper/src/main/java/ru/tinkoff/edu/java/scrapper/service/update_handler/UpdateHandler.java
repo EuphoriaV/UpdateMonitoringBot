@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.update_handler;
+package ru.tinkoff.edu.java.scrapper.service.update_handler;
 
 import ru.tinkoff.edu.java.link_parser.ParsedObject;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;

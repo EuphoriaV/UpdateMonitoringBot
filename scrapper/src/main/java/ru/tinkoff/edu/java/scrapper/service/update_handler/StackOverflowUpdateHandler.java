@@ -1,26 +1,26 @@
-package ru.tinkoff.edu.java.scrapper.update_handler;
+package ru.tinkoff.edu.java.scrapper.service.update_handler;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.link_parser.ParsedObject;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
-import ru.tinkoff.edu.java.scrapper.client.BotClient;
 import ru.tinkoff.edu.java.scrapper.client.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.database.dto.Chat;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.dto.QuestionResponse;
+import ru.tinkoff.edu.java.scrapper.service.MessageService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@Component
+@Service
 public class StackOverflowUpdateHandler implements UpdateHandler {
-    private final BotClient botClient;
+    private final MessageService messageService;
     private final StackOverflowClient stackOverflowClient;
 
-    public StackOverflowUpdateHandler(BotClient botClient, StackOverflowClient stackOverflowClient) {
-        this.botClient = botClient;
+    public StackOverflowUpdateHandler(MessageService messageService, StackOverflowClient stackOverflowClient) {
+        this.messageService = messageService;
         this.stackOverflowClient = stackOverflowClient;
     }
 
@@ -38,7 +38,7 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             }
             if (countNewAnswers > 0) {
                 try {
-                    botClient.update(new LinkUpdate(link.id(), new URI(link.url()), "На вопрос '".
+                    messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()), "На вопрос '".
                             concat(response.title()).concat("' ответили ").concat(String.valueOf(countNewAnswers)).
                             concat(getCorrectForm(countNewAnswers)), chats.stream().map(Chat::id).toList()));
                     scenario = true;
@@ -48,7 +48,7 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             }
             if (response.closedAt() != null && response.closedAt().compareTo(link.checkedAt()) > -1) {
                 try {
-                    botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
+                    messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()),
                             "Вопрос '".concat(response.title()).concat("' был закрыт "),
                             chats.stream().map(Chat::id).toList()));
                     scenario = true;
@@ -58,7 +58,7 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             }
             if (response.updatedAt().compareTo(link.checkedAt()) > -1 && !scenario) {
                 try {
-                    botClient.update(new LinkUpdate(link.id(), new URI(link.url()),
+                    messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()),
                             "Произошло обновление вопроса '".concat(response.title()).concat("'"),
                             chats.stream().map(Chat::id).toList()));
                 } catch (URISyntaxException e) {

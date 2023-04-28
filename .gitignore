@@ -3,3 +3,4 @@
 *.iml
 *.txt
 /postgres_data/
+/rabbitmq_data/
