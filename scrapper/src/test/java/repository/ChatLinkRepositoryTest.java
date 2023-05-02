@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
@@ -62,8 +61,8 @@ public class ChatLinkRepositoryTest {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
         ChatLinkRepository chatLinkRepository = chatLinkRepos().get(index);
-        Chat chat = new Chat(3, "Vasya");
-        Link link = new Link(3, "link");
+        Chat chat = new Chat(1, "Ilya");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
         chatRepository.add(chat);
         link = linkRepository.findByUrl(link.url());
@@ -73,7 +72,8 @@ public class ChatLinkRepositoryTest {
         var res = chatLinkRepository.findAll();
 
         assertEquals(res.size(), 1);
-        assertTrue(res.contains(subscription));
+        assertEquals(res.get(0).link(), link);
+        assertEquals(res.get(0).chat(), chat);
     }
 
     @Transactional
@@ -83,8 +83,8 @@ public class ChatLinkRepositoryTest {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
         ChatLinkRepository chatLinkRepository = chatLinkRepos().get(index);
-        Chat chat = new Chat(3, "Vasya");
-        Link link = new Link(3, "link");
+        Chat chat = new Chat(1, "Ilya");
+        Link link = new Link(1, "url");
         linkRepository.add(link);
         chatRepository.add(chat);
         link = linkRepository.findByUrl(link.url());
@@ -104,10 +104,10 @@ public class ChatLinkRepositoryTest {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
         ChatLinkRepository chatLinkRepository = chatLinkRepos().get(index);
-        Chat chat1 = new Chat(3, "Vasya");
-        Link link1 = new Link(3, "link1");
-        Chat chat2 = new Chat(4, "Petya");
-        Link link2 = new Link(4, "link2");
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
         linkRepository.add(link1);
         linkRepository.add(link2);
         chatRepository.add(chat1);
@@ -133,10 +133,10 @@ public class ChatLinkRepositoryTest {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
         ChatLinkRepository chatLinkRepository = chatLinkRepos().get(index);
-        Chat chat1 = new Chat(3, "Vasya");
-        Link link1 = new Link(3, "link1");
-        Chat chat2 = new Chat(4, "Petya");
-        Link link2 = new Link(4, "link2");
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
         linkRepository.add(link1);
         linkRepository.add(link2);
         chatRepository.add(chat1);
@@ -161,10 +161,10 @@ public class ChatLinkRepositoryTest {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
         ChatLinkRepository chatLinkRepository = chatLinkRepos().get(index);
-        Chat chat1 = new Chat(3, "Vasya");
-        Link link1 = new Link(3, "link1");
-        Chat chat2 = new Chat(4, "Petya");
-        Link link2 = new Link(4, "link2");
+        Chat chat1 = new Chat(1, "Ilya");
+        Link link1 = new Link(1, "url1");
+        Chat chat2 = new Chat(2, "Fedya");
+        Link link2 = new Link(2, "url2");
         linkRepository.add(link1);
         linkRepository.add(link2);
         chatRepository.add(chat1);
