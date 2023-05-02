@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
@@ -72,8 +73,7 @@ public class ChatLinkRepositoryTest {
         var res = chatLinkRepository.findAll();
 
         assertEquals(res.size(), 1);
-        assertEquals(res.get(0).link(), link);
-        assertEquals(res.get(0).chat(), chat);
+        assertTrue(res.contains(subscription));
     }
 
     @Transactional
