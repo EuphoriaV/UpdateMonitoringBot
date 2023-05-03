@@ -7,7 +7,7 @@ import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Repository
@@ -23,7 +23,7 @@ public class JdbcLinkRepository implements LinkRepository {
         rowMapper = ((rs, rowNum) -> new Link(
                 rs.getLong("link_id"),
                 rs.getString("url"),
-                OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC"))
+                OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneOffset.ofHours(3))
         ));
     }
 
