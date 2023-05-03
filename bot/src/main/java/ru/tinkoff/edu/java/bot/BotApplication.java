@@ -13,6 +13,5 @@ public class BotApplication {
         var ctx = SpringApplication.run(BotApplication.class, args);
         ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
         System.out.println(config);
-        //
     }
 }
