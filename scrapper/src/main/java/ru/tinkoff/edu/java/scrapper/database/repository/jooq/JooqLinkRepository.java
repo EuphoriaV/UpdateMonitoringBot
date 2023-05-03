@@ -25,7 +25,7 @@ public class JooqLinkRepository implements LinkRepository {
 
     private Link convert(Record record) {
         return new Link(record.get(LINKS.LINK_ID), record.get(LINKS.URL),
-                record.get(LINKS.CHECKED_AT).atOffset(ZoneOffset.UTC));
+                record.get(LINKS.CHECKED_AT).atZone(ZoneOffset.systemDefault()).toOffsetDateTime());
     }
 
     public List<Link> findAll() {
@@ -40,7 +40,7 @@ public class JooqLinkRepository implements LinkRepository {
 
     public void add(Link link) {
         dslContext.insertInto(LINKS).set(LINKS.URL, link.url()).set(LINKS.CHECKED_AT,
-                link.checkedAt().toLocalDateTime()).execute();
+                LocalDateTime.ofInstant(link.checkedAt().toInstant(), ZoneOffset.systemDefault())).execute();
     }
 
     public List<Link> findUnchecked() {
