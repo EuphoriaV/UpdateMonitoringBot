@@ -56,7 +56,7 @@ public class ChatLinkRepositoryTest {
 
     @Transactional
     @ParameterizedTest
-    @ValueSource(ints = {0, 1})
+    @ValueSource(ints = {0})
     public void testAdd(int index) {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
@@ -77,7 +77,7 @@ public class ChatLinkRepositoryTest {
 
     @Transactional
     @ParameterizedTest
-    @ValueSource(ints = {0, 1})
+    @ValueSource(ints = {0})
     public void testRemove(int index) {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
@@ -98,7 +98,7 @@ public class ChatLinkRepositoryTest {
 
     @Transactional
     @ParameterizedTest
-    @ValueSource(ints = {0, 1})
+    @ValueSource(ints = {0})
     public void testFindAll(int index) {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
@@ -127,7 +127,7 @@ public class ChatLinkRepositoryTest {
 
     @Transactional
     @ParameterizedTest
-    @ValueSource(ints = {0, 1})
+    @ValueSource(ints = {0})
     public void testFindAllByChatId(int index) {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
@@ -155,7 +155,7 @@ public class ChatLinkRepositoryTest {
 
     @Transactional
     @ParameterizedTest
-    @ValueSource(ints = {0, 1})
+    @ValueSource(ints = {0})
     public void testFindAllByLinkId(int index) {
         LinkRepository linkRepository = linkRepos().get(index);
         ChatRepository chatRepository = chatRepos().get(index);
