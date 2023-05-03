@@ -25,7 +25,7 @@ public class JooqChatLinkRepository implements ChatLinkRepository {
     private Subscription convert(Record5 record5) {
         return new Subscription(new Chat((int) record5.get("chat_id"), (String) record5.get("username")),
                 new Link((int) record5.get("link_id"), (String) record5.get("url"),
-                        ((LocalDateTime) record5.get("checked_at")).atOffset(ZoneOffset.ofHours(3))));
+                        ((LocalDateTime) record5.get("checked_at")).atOffset(ZoneOffset.ofHours(0))));
     }
 
     public List<Subscription> findAll() {
