@@ -1,12 +1,14 @@
 package ru.tinkoff.edu.java.scrapper.database.repository.jooq;
 
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.database.dto.Link;
 import ru.tinkoff.edu.java.scrapper.database.repository.LinkRepository;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import static ru.tinkoff.edu.java.scrapper.domain.jooq.Tables.LINKS;
@@ -21,13 +23,18 @@ public class JooqLinkRepository implements LinkRepository {
         this.updateInterval = updateInterval;
     }
 
+    private Link convert(Record record) {
+        return new Link(record.get(LINKS.LINK_ID), record.get(LINKS.URL),
+                record.get(LINKS.CHECKED_AT).atOffset(ZoneOffset.UTC));
+    }
+
     public List<Link> findAll() {
-        return dslContext.select(LINKS.fields()).from(LINKS).fetchInto(Link.class);
+        return dslContext.select(LINKS.fields()).from(LINKS).fetch().map(this::convert);
     }
 
     public Link findByUrl(String url) {
         var res = dslContext.select(LINKS.fields()).from(LINKS).
-                where(LINKS.URL.eq(url)).limit(1).fetchInto(Link.class);
+                where(LINKS.URL.eq(url)).limit(1).fetch().map(this::convert);
         return res.size() == 0 ? null : res.get(0);
     }
 

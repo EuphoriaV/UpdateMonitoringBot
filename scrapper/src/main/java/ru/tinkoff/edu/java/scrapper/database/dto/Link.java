@@ -5,6 +5,6 @@ import java.time.ZoneOffset;
 
 public record Link(long id, String url, OffsetDateTime checkedAt) {
     public Link(long id, String url) {
-        this(id, url, OffsetDateTime.now(ZoneOffset.ofHours(3)));
+        this(id, url, OffsetDateTime.now(ZoneOffset.UTC));
     }
 }

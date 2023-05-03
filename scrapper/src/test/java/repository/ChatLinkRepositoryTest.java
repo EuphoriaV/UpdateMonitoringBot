@@ -72,7 +72,7 @@ public class ChatLinkRepositoryTest {
         var res = chatLinkRepository.findAll();
 
         assertEquals(res.size(), 1);
-        assertEquals(res.get(0), subscription);
+        assertTrue(res.contains(subscription));
     }
 
     @Transactional

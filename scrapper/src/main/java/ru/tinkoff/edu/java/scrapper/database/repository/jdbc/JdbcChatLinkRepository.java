@@ -9,7 +9,7 @@ import ru.tinkoff.edu.java.scrapper.database.dto.Subscription;
 import ru.tinkoff.edu.java.scrapper.database.repository.ChatLinkRepository;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
 @Repository
@@ -22,7 +22,7 @@ public class JdbcChatLinkRepository implements ChatLinkRepository {
         rowMapper = ((rs, rowNum) -> new Subscription(
                 new Chat(rs.getLong("chat_id"), rs.getString("username")),
                 new Link(rs.getLong("link_id"), rs.getString("url"),
-                        OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneOffset.ofHours(3)))
+                        OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC")))
         ));
     }
 
