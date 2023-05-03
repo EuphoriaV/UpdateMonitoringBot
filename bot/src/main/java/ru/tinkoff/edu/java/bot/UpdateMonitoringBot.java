@@ -67,7 +67,7 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /track 'ссылка'");
         }
         String url = words[1];
-        if(LinkParser.parseLink(url) == null){
+        if (LinkParser.parseLink(url) == null) {
             return sendMessage(chatId, "Ссылка невалидная");
         }
         try {
@@ -86,7 +86,7 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /untrack 'ссылка'");
         }
         String url = words[1];
-        if(LinkParser.parseLink(url) == null){
+        if (LinkParser.parseLink(url) == null) {
             return sendMessage(chatId, "Ссылка невалидная");
         }
         try {
