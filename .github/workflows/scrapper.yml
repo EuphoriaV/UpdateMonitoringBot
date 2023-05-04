@@ -24,18 +24,28 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build scrapper app
         run: mvn package -pl scrapper -am
 
-      - name: Build scrapper image
-        run: docker build -f scrapper.Dockerfile -t ${{ env.REGISTRY }}/${{ env.LOWERCASE_AUTHOR }}/scrapper .
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: ${{ env.LOWERCASE_AUTHOR }}:${{ env.IMAGE_NAME }}
+          file: ./scrapper.Dockerfile
 
-      - name: Push scrapper image
-        run: docker push ${{ env.REGISTRY }}/${{ env.LOWERCASE_AUTHOR }}/scrapper:latest
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.LOWERCASE_AUTHOR }}:${{ env.IMAGE_NAME }}
+          file: ./scrapper.Dockerfile
