@@ -1,11 +1,11 @@
-package ru.tinkoff.edu.java.scrapper.client;
+package ru.tinkoff.edu.java.bot.client;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
-import ru.tinkoff.edu.java.scrapper.dto.LinkResponse;
-import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
-import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.LinkResponse;
+import ru.tinkoff.edu.java.bot.dto.ListLinksResponse;
+import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 
 public class ScrapperClient {
     private final WebClient webClient;

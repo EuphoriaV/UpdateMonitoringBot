@@ -1,8 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.client;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 import ru.tinkoff.edu.java.scrapper.dto.QuestionResponse;

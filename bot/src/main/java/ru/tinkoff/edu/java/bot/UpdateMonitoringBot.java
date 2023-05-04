@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.annotation.Command;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
-import ru.tinkoff.edu.java.scrapper.client.ScrapperClient;
-import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
-import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
+import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 
 import java.lang.reflect.Method;
 import java.net.URI;

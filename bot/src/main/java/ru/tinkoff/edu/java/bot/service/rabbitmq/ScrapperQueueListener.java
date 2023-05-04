@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.service.BotService;
-import ru.tinkoff.edu.java.scrapper.dto.LinkUpdate;
+import ru.tinkoff.edu.java.bot.dto.LinkUpdate;
 
 @Service
 @RabbitListener(queues = "${bot.queue-name}")
