@@ -34,7 +34,7 @@ jobs:
         run: mvn package -pl scrapper -am
 
       - name: Build scrapper image
-        run: docker build -f scrapper.Dockerfile -t ${{ env.REGISTRY }}/scrapper .
+        run: docker build -f scrapper.Dockerfile -t ${{ env.REGISTRY }}/${{ github.repository }}/scrapper .
 
       - name: Push scrapper image
-        run: docker push ${{ env.REGISTRY }}/scrapper:latest
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}/scrapper:latest

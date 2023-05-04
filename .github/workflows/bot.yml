@@ -34,7 +34,7 @@ jobs:
         run: mvn package -pl bot -am
 
       - name: Build bot image
-        run: docker build -f bot.Dockerfile -t ${{ env.REGISTRY }}/bot .
+        run: docker build -f bot.Dockerfile -t ${{ env.REGISTRY }}/${{ github.repository }}/bot .
 
       - name: Push bot image
-        run: docker push ${{ env.REGISTRY }}/bot:latest
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}/bot:latest
