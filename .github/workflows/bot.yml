@@ -8,8 +8,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: bot
-  LOWERCASE_AUTHOR: euphoriav
-  LOWERCASE_REPOSITORY: tinkoff-java-backend
 
 jobs:
   build:
@@ -29,12 +27,7 @@ jobs:
         run: mvn package -pl bot -am
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: false
-          tags: ${{ env.LOWERCASE_AUTHOR }}/${{ env.LOWERCASE_REPOSITORY }}:${{ env.IMAGE_NAME }}
-          file: ./bot.Dockerfile
+        run: docker build -f bot.Dockerfile -t ${{ github.repository }}:${{ env.IMAGE_NAME }} .
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -44,9 +37,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ env.LOWERCASE_AUTHOR }}/${{ env.LOWERCASE_REPOSITORY }}:${{ env.IMAGE_NAME }}
-          file: ./bot.Dockerfile
+        run: docker push ${{ end.REGISTRY }}/${{ github.repository }}:${{ env.IMAGE_NAME }}
