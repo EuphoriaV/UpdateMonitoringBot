@@ -9,6 +9,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: scrapper
   LOWERCASE_AUTHOR: euphoriav
+  LOWERCASE_REPOSITORY: tinkoff-java-backend
 
 jobs:
   build:
@@ -32,7 +33,7 @@ jobs:
         with:
           context: .
           push: false
-          tags: ${{ env.LOWERCASE_AUTHOR }}:${{ env.IMAGE_NAME }}
+          tags: ${{ env.LOWERCASE_AUTHOR }}/${{ env.LOWERCASE_REPOSITORY }}:${{ env.IMAGE_NAME }}
           file: ./scrapper.Dockerfile
 
       - name: Login to GitHub Container Registry
@@ -47,5 +48,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.LOWERCASE_AUTHOR }}:${{ env.IMAGE_NAME }}
+          tags: ghcr.io/${{ env.LOWERCASE_AUTHOR }}/${{ env.LOWERCASE_REPOSITORY }}:${{ env.IMAGE_NAME }}
           file: ./scrapper.Dockerfile
