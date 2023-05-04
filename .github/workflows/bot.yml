@@ -37,4 +37,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker image
-        run: docker push ${{ end.REGISTRY }}/${{ github.repository }}:${{ env.IMAGE_NAME }}
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.IMAGE_NAME }}
