@@ -10,6 +10,9 @@ env:
   IMAGE_NAME: bot
   AUTHOR: euphoriav
 
+permissions:
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
