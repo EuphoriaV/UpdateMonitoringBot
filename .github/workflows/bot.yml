@@ -1,25 +1,40 @@
-name: Build bot app
+name: Build bot
+
 on:
   push:
     paths:
       - 'bot/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: bot
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: see me
-        run: echo ${{ github.actor }}
-      - name: see token
-        run: echo ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build bot app
         run: mvn package -pl bot -am
+
       - name: Build bot image
-        run: docker build -f bot.Dockerfile -t bot .
+        run: docker build -f bot.Dockerfile -t ${{ env.REGISTRY }}/bot .
+
+      - name: Push bot image
+        run: docker push ${{ env.REGISTRY }}/bot:latest

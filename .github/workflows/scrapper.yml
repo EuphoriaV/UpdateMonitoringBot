@@ -1,21 +1,40 @@
-name: Build scrapper app
+name: Build scrapper
+
 on:
   push:
     paths:
       - 'scrapper/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: scrapper
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build scrapper app
         run: mvn package -pl scrapper -am
+
       - name: Build scrapper image
-        run: docker build -f scrapper.Dockerfile -t scrapper .
+        run: docker build -f scrapper.Dockerfile -t ${{ env.REGISTRY }}/scrapper .
+
+      - name: Push scrapper image
+        run: docker push ${{ env.REGISTRY }}/scrapper:latest
