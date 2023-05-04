@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: bot
+  LOWERCASE_AUTHOR: euphoriav
 
 jobs:
   build:
@@ -34,7 +35,7 @@ jobs:
         run: mvn package -pl bot -am
 
       - name: Build bot image
-        run: docker build -f bot.Dockerfile -t ${{ env.REGISTRY }}/${{ github.repository }}/bot .
+        run: docker build -f bot.Dockerfile -t ${{ env.REGISTRY }}/${{ github.LOWERCASE_AUTHOR }}/bot .
 
       - name: Push bot image
-        run: docker push ${{ env.REGISTRY }}/${{ github.repository }}/bot:latest
+        run: docker push ${{ env.REGISTRY }}/${{ github.LOWERCASE_AUTHOR }}/bot:latest
