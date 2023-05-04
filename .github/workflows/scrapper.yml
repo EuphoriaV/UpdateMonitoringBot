@@ -1,4 +1,4 @@
-name: Build Scrapper App
+name: Build scrapper app
 on:
   push:
     paths:
@@ -15,5 +15,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build Scrapper App
+      - name: Build scrapper app
         run: mvn package -pl scrapper -am
+      - name: Build scrapper image
+        run: docker build -f scrapper.Dockerfile -t scrapper .

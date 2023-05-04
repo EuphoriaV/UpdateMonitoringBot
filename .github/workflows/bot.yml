@@ -1,4 +1,4 @@
-name: Build Bot App
+name: Build bot app
 on:
   push:
     paths:
@@ -15,5 +15,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build Bot App
+      - name: Build bot app
         run: mvn package -pl bot -am
+      - name: Build bot image
+        run: docker build -f bot.Dockerfile -t bot .
