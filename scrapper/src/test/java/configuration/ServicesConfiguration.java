@@ -50,7 +50,8 @@ public class ServicesConfiguration {
     }
 
     @Bean
-    public JdbcLinkUpdater jdbcLinkUpdater(JdbcLinkRepository linkRepository, JdbcChatLinkRepository chatLinkRepository) {
+    public JdbcLinkUpdater jdbcLinkUpdater(JdbcLinkRepository linkRepository,
+                                           JdbcChatLinkRepository chatLinkRepository) {
         return new JdbcLinkUpdater(linkRepository, chatLinkRepository);
     }
 
@@ -66,7 +67,8 @@ public class ServicesConfiguration {
     }
 
     @Bean
-    public JooqLinkUpdater jooqLinkUpdater(JooqLinkRepository linkRepository, JooqChatLinkRepository chatLinkRepository) {
+    public JooqLinkUpdater jooqLinkUpdater(JooqLinkRepository linkRepository,
+                                           JooqChatLinkRepository chatLinkRepository) {
         return new JooqLinkUpdater(linkRepository, chatLinkRepository);
     }
 

@@ -6,7 +6,7 @@ import ru.tinkoff.edu.java.scrapper.dto.LinkUpdate;
 public class BotClient {
     private final WebClient webClient;
 
-    private String BASE_URL = "http://localhost:8081";
+    private final String BASE_URL = "http://localhost:8081";
 
     public BotClient() {
         webClient = WebClient.create(BASE_URL);

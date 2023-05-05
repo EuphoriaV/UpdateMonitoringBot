@@ -10,7 +10,7 @@ import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 public class ScrapperClient {
     private final WebClient webClient;
 
-    private String BASE_URL = "http://localhost:8080";
+    private final String BASE_URL = "http://localhost:8080";
 
     public ScrapperClient() {
         webClient = WebClient.create(BASE_URL);

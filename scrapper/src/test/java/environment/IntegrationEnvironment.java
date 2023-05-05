@@ -15,23 +15,23 @@ import java.sql.SQLException;
 
 
 public abstract class IntegrationEnvironment {
-    protected static final PostgreSQLContainer container;
-    protected static final JdbcTemplate jdbcTemplate;
+    protected static final PostgreSQLContainer CONTAINER;
+    protected static final JdbcTemplate JDBC_TEMPLATE;
 
     static {
-        container = new PostgreSQLContainer("postgres:14")
+        CONTAINER = new PostgreSQLContainer("postgres:14")
                 .withDatabaseName("scrapper")
                 .withUsername("EuphoriaV")
                 .withPassword("1234");
-        container.start();
+        CONTAINER.start();
         try {
-            Connection connection = container.createConnection("");
+            Connection connection = CONTAINER.createConnection("");
             Liquibase liquibase = new Liquibase("master.xml", new DirectoryResourceAccessor(
                     Path.of(".").toAbsolutePath().getParent().getParent().resolve("migrations")),
                     new JdbcConnection(connection));
             liquibase.update();
-            jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(
-                    container.createConnection(""), true));
+            JDBC_TEMPLATE = new JdbcTemplate(new SingleConnectionDataSource(
+                    CONTAINER.createConnection(""), true));
         } catch (SQLException | LiquibaseException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }
