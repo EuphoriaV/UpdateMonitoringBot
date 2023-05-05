@@ -15,7 +15,8 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse invalidParameters(InvalidParametersException exception) {
         return new ApiErrorResponse("Invalid parameters", HttpStatus.BAD_REQUEST.toString(),
-                exception.getClass().getName(), exception.getMessage(),
-                Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList());
+            exception.getClass().getName(), exception.getMessage(),
+            Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList()
+        );
     }
 }

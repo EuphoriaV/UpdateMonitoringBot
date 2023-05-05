@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 public class DataBaseConfiguration {
     @Bean

@@ -38,9 +38,9 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             }
             if (countNewAnswers > 0) {
                 try {
-                    messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()), "На вопрос '".
-                            concat(response.title()).concat("' ответили ").concat(String.valueOf(countNewAnswers)).
-                            concat(getCorrectForm(countNewAnswers)), chats.stream().map(Chat::id).toList()));
+                    messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()), "На вопрос '"
+                        .concat(response.title()).concat("' ответили ").concat(String.valueOf(countNewAnswers))
+                        .concat(getCorrectForm(countNewAnswers)), chats.stream().map(Chat::id).toList()));
                     scenario = true;
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
@@ -49,8 +49,9 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             if (response.closedAt() != null && response.closedAt().compareTo(link.checkedAt()) > -1) {
                 try {
                     messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()),
-                            "Вопрос '".concat(response.title()).concat("' был закрыт "),
-                            chats.stream().map(Chat::id).toList()));
+                        "Вопрос '".concat(response.title()).concat("' был закрыт "),
+                        chats.stream().map(Chat::id).toList()
+                    ));
                     scenario = true;
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
@@ -59,8 +60,9 @@ public class StackOverflowUpdateHandler implements UpdateHandler {
             if (response.updatedAt().compareTo(link.checkedAt()) > -1 && !scenario) {
                 try {
                     messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()),
-                            "Произошло обновление вопроса '".concat(response.title()).concat("'"),
-                            chats.stream().map(Chat::id).toList()));
+                        "Произошло обновление вопроса '".concat(response.title()).concat("'"),
+                        chats.stream().map(Chat::id).toList()
+                    ));
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }

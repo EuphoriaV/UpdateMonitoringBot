@@ -14,8 +14,10 @@ public class CommonUpdateHandler implements UpdateHandler {
     private final GitHubUpdateHandler gitHubUpdateHandler;
     private final StackOverflowUpdateHandler stackOverflowUpdateHandler;
 
-    public CommonUpdateHandler(GitHubUpdateHandler gitHubUpdateHandler,
-                               StackOverflowUpdateHandler stackOverflowUpdateHandler) {
+    public CommonUpdateHandler(
+        GitHubUpdateHandler gitHubUpdateHandler,
+        StackOverflowUpdateHandler stackOverflowUpdateHandler
+    ) {
         this.gitHubUpdateHandler = gitHubUpdateHandler;
         this.stackOverflowUpdateHandler = stackOverflowUpdateHandler;
     }

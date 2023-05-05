@@ -23,10 +23,8 @@ import ru.tinkoff.edu.java.scrapper.service.jooq.JooqChatService;
 import ru.tinkoff.edu.java.scrapper.service.jooq.JooqLinkService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaChatService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
-
 import java.net.URI;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfig.class})
@@ -39,7 +37,6 @@ public class LinkServiceTest {
     @Autowired
     private JpaChatService jpaChatService;
 
-
     public List<ChatService> chatServices() {
         return List.of(jdbcChatService, jooqChatService, jpaChatService);
     }
@@ -50,7 +47,6 @@ public class LinkServiceTest {
     private JooqLinkService jooqLinkService;
     @Autowired
     private JpaLinkService jpaLinkService;
-
 
     public List<LinkService> linkServices() {
         return List.of(jdbcLinkService, jooqLinkService, jpaLinkService);
@@ -93,8 +89,10 @@ public class LinkServiceTest {
 
         var res = linkService.findAll(chat.id());
         assertEquals(res.links().get(0).url().toString(), link);
-        assertThrows(InvalidParametersException.class, () -> linkService.addLink(chat.id(),
-                new AddLinkRequest(new URI(invalidLink))));
+        assertThrows(InvalidParametersException.class, () -> linkService.addLink(
+            chat.id(),
+            new AddLinkRequest(new URI(invalidLink))
+        ));
     }
 
     @SneakyThrows
@@ -114,7 +112,9 @@ public class LinkServiceTest {
 
         var res = linkService.findAll(chat.id());
         assertEquals(res.size(), 0);
-        assertThrows(LinkNotFoundException.class, () -> linkService.removeLink(chat.id(),
-                new RemoveLinkRequest(new URI(invalidLink))));
+        assertThrows(LinkNotFoundException.class, () -> linkService.removeLink(
+            chat.id(),
+            new RemoveLinkRequest(new URI(invalidLink))
+        ));
     }
 }

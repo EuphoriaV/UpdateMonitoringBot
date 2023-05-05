@@ -17,23 +17,26 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse invalidParameters(InvalidParametersException exception) {
         return new ApiErrorResponse("Invalid parameters", HttpStatus.BAD_REQUEST.toString(),
-                exception.getClass().getName(), exception.getMessage(),
-                Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList());
+            exception.getClass().getName(), exception.getMessage(),
+            Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList()
+        );
     }
 
     @ExceptionHandler(LinkNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse linkNotFound(LinkNotFoundException exception) {
         return new ApiErrorResponse("Link not found", HttpStatus.NOT_FOUND.toString(),
-                exception.getClass().getName(), exception.getMessage(),
-                Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList());
+            exception.getClass().getName(), exception.getMessage(),
+            Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList()
+        );
     }
 
     @ExceptionHandler(ChatDoesntExistException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse chatDoesntExist(ChatDoesntExistException exception) {
         return new ApiErrorResponse("Chat doesn't exist", HttpStatus.NOT_FOUND.toString(),
-                exception.getClass().getName(), exception.getMessage(),
-                Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList());
+            exception.getClass().getName(), exception.getMessage(),
+            Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).toList()
+        );
     }
 }

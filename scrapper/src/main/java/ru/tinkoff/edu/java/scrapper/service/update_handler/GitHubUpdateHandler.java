@@ -31,8 +31,9 @@ public class GitHubUpdateHandler implements UpdateHandler {
             if (response.pushedAt().compareTo(link.checkedAt()) > -1) {
                 try {
                     messageService.sendMessage(new LinkUpdate(link.id(), new URI(link.url()),
-                            "1 или более коммитов были запушены в репозиторий '".concat(response.fullName()).
-                                    concat("'"), chats.stream().map(Chat::id).toList()));
+                        "1 или более коммитов были запушены в репозиторий '".concat(response.fullName())
+                            .concat("'"), chats.stream().map(Chat::id).toList()
+                    ));
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }

@@ -34,8 +34,8 @@ public class RabbitMQConfiguration {
     @Bean
     public Queue scrapperQueue(ApplicationConfig config) {
         return QueueBuilder.durable(config.queueName())
-                .withArgument("x-dead-letter-exchange", config.queueName().concat(".dlx"))
-                .build();
+            .withArgument("x-dead-letter-exchange", config.queueName().concat(".dlx"))
+            .build();
     }
 
     @Bean

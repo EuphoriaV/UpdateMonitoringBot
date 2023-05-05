@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.database.entity;
 
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,8 +17,8 @@ public class Chat {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "chat_link",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "link_id"))
+               joinColumns = @JoinColumn(name = "chat_id"),
+               inverseJoinColumns = @JoinColumn(name = "link_id"))
     private Set<Link> links = new HashSet<>();
 
     public long getId() {

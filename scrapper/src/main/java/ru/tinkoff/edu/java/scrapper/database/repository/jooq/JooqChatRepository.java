@@ -22,8 +22,8 @@ public class JooqChatRepository implements ChatRepository {
     }
 
     public Chat findById(long id) {
-        var res = dslContext.select(CHATS.fields()).from(CHATS).
-                where(CHATS.CHAT_ID.eq((int) id)).limit(1).fetchInto(Chat.class);
+        var res = dslContext.select(CHATS.fields()).from(CHATS)
+            .where(CHATS.CHAT_ID.eq((int) id)).limit(1).fetchInto(Chat.class);
         return res.size() == 0 ? null : res.get(0);
     }
 

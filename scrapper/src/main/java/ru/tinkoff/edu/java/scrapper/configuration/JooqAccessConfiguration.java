@@ -19,8 +19,11 @@ import ru.tinkoff.edu.java.scrapper.service.jooq.JooqLinkUpdater;
 @ConditionalOnProperty(prefix = "scrapper", name = "database-access-type", havingValue = "jooq")
 public class JooqAccessConfiguration {
     @Bean
-    public LinkService linkService(JooqChatLinkRepository chatLinkRepository,
-                                   JooqLinkRepository linkRepository, JooqChatRepository chatRepository) {
+    public LinkService linkService(
+        JooqChatLinkRepository chatLinkRepository,
+        JooqLinkRepository linkRepository,
+        JooqChatRepository chatRepository
+    ) {
         return new JooqLinkService(chatLinkRepository, linkRepository, chatRepository);
     }
 

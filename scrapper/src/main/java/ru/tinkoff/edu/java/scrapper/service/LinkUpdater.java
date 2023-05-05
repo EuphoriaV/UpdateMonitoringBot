@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface LinkUpdater {
     List<Subscription> getUpdates();
+
     void updateAll(List<Link> links);
 }

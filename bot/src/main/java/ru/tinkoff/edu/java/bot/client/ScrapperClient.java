@@ -29,17 +29,19 @@ public class ScrapperClient {
     }
 
     public ListLinksResponse getLinks(long tgChatId) {
-        return webClient.get().uri("/links").header("tgChatId", String.valueOf(tgChatId)).
-                retrieve().bodyToMono(ListLinksResponse.class).block();
+        return webClient.get().uri("/links").header("tgChatId", String.valueOf(tgChatId))
+            .retrieve().bodyToMono(ListLinksResponse.class).block();
     }
 
     public LinkResponse addLink(long tgChatId, AddLinkRequest request) {
-        return webClient.post().uri("/links").header("tgChatId", String.valueOf(tgChatId)).
-                bodyValue(request).retrieve().bodyToMono(LinkResponse.class).block();
+        return webClient.post().uri("/links").header("tgChatId", String.valueOf(tgChatId))
+            .bodyValue(request).retrieve().bodyToMono(LinkResponse.class).block();
     }
 
     public LinkResponse deleteLink(long tgChatId, RemoveLinkRequest request) {
-        return webClient.method(HttpMethod.DELETE).uri("/links").header("tgChatId",
-                String.valueOf(tgChatId)).bodyValue(request).retrieve().bodyToMono(LinkResponse.class).block();
+        return webClient.method(HttpMethod.DELETE).uri("/links").header(
+            "tgChatId",
+            String.valueOf(tgChatId)
+        ).bodyValue(request).retrieve().bodyToMono(LinkResponse.class).block();
     }
 }

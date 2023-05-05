@@ -22,14 +22,15 @@ public class JpaLinkUpdater implements LinkUpdater {
 
     public List<Subscription> getUpdates() {
         var links = jpaLinkRepository.findAllByCheckedAtIsLessThanEqual(
-                OffsetDateTime.now().minusSeconds(updateInterval));
+            OffsetDateTime.now().minusSeconds(updateInterval));
         List<Subscription> res = new ArrayList<>();
         for (Link link : links) {
             for (Chat chat : link.getChats()) {
                 res.add(new Subscription(
-                        new ru.tinkoff.edu.java.scrapper.database.dto.Chat(chat.getId(), chat.getUsername()),
-                        new ru.tinkoff.edu.java.scrapper.database.dto.Link(link.getId(),
-                                link.getUrl(), link.getCheckedAt())
+                    new ru.tinkoff.edu.java.scrapper.database.dto.Chat(chat.getId(), chat.getUsername()),
+                    new ru.tinkoff.edu.java.scrapper.database.dto.Link(link.getId(),
+                        link.getUrl(), link.getCheckedAt()
+                    )
                 ));
             }
         }
