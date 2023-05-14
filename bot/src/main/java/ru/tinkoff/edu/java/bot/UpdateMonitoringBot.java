@@ -11,8 +11,8 @@ import ru.tinkoff.edu.java.bot.annotation.Command;
 import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
+import ru.tinkoff.edu.java.bot.service.MetricService;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
-
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,10 +23,16 @@ import java.util.stream.Collectors;
 public class UpdateMonitoringBot extends Bot {
     private final TelegramBot telegramBot;
     private final ScrapperClient scrapperClient;
+    private final MetricService metricService;
 
-    public UpdateMonitoringBot(@Value("${bot.token}") String token, ScrapperClient scrapperClient) {
+    public UpdateMonitoringBot(
+        @Value("${bot.token}") String token,
+        ScrapperClient scrapperClient,
+        MetricService metricService
+    ) {
         this.telegramBot = new TelegramBot(token);
         this.scrapperClient = scrapperClient;
+        this.metricService = metricService;
         telegramBot.setUpdatesListener(this);
     }
 
@@ -100,6 +106,11 @@ public class UpdateMonitoringBot extends Bot {
     @Override
     public SendResponse handleInvalidMessage(Message message) {
         return sendMessage(message.chat().id(), "Неизвестная команда: " + message.text());
+    }
+
+    @Override
+    public void incrementHandledMessageCount() {
+        metricService.incrementHandledMessageCount();
     }
 
     public SendResponse sendMessage(long chatId, String text) {

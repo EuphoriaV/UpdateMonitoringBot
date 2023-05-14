@@ -30,6 +30,7 @@ public abstract class Bot implements UpdatesListener {
         if (update.message() == null) {
             return;
         }
+        incrementHandledMessageCount();
         Message message = update.message();
         if (message.text() == null) {
             handleInvalidMessage(message);
@@ -63,4 +64,6 @@ public abstract class Bot implements UpdatesListener {
     }
 
     abstract SendResponse handleInvalidMessage(Message message);
+
+    abstract void incrementHandledMessageCount();
 }
