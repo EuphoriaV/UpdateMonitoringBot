@@ -18,7 +18,7 @@ public class BotTest {
     @BeforeAll
     public static void init() {
         scrapperClient = mock(ScrapperClient.class);
-        bot = new UpdateMonitoringBot("5991824863:AAGLRPS01EfKLqfn-4KkGuwPlVj6kyln3jw", scrapperClient);
+        bot = new UpdateMonitoringBot("5991824863:AAGLRPS01EfKLqfn-4KkGuwPlVj6kyln3jw", scrapperClient, null);
         testChatId = 795253839;
     }
 
