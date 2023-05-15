@@ -21,8 +21,11 @@ public abstract class Bot implements UpdatesListener {
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
 
-    //Боту будет приходить команда /commandName, и ее будет обрабатывать соответствующий метод с анотацией Command с полем name равным commandName
-    //Если такого метода нет, то будет вызван метод, обрабатывающий невалидные команды
+    /*
+    Боту будет приходить команда /commandName, и ее будет обрабатывать соответствующий
+    метод с анотацией Command с полем name равным commandName
+    Если такого метода нет, то будет вызван метод, обрабатывающий невалидные команды
+     */
     public void process(Update update) {
         if (update.message() == null) {
             return;

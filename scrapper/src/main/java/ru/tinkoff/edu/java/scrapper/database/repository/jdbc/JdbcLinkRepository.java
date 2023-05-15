@@ -21,9 +21,9 @@ public class JdbcLinkRepository implements LinkRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.updateInterval = updateInterval;
         rowMapper = ((rs, rowNum) -> new Link(
-                rs.getLong("link_id"),
-                rs.getString("url"),
-                OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC"))
+            rs.getLong("link_id"),
+            rs.getString("url"),
+            OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC"))
         ));
     }
 

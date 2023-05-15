@@ -95,8 +95,8 @@ public class LinkRepositoryTest {
     public void testFindUnchecked(int index) {
         LinkRepository linkRepository = repos().get(index);
         Link link1 = new Link(1, "url1");
-        Link link2 = new Link(2, "url2", OffsetDateTime.
-                of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
+        Link link2 = new Link(2, "url2", OffsetDateTime
+            .of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
         linkRepository.add(link1);
         linkRepository.add(link2);
 
@@ -111,8 +111,8 @@ public class LinkRepositoryTest {
     @ValueSource(ints = {0, 1})
     public void testUpdateTime(int index) {
         LinkRepository linkRepository = repos().get(index);
-        Link link = new Link(1, "url1", OffsetDateTime.
-                of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
+        Link link = new Link(1, "url1", OffsetDateTime
+            .of(2020, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC));
 
         linkRepository.updateTime(link);
         var res = linkRepository.findUnchecked();

@@ -8,10 +8,10 @@ import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.annotation.Command;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
+import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.link_parser.LinkParser;
-import ru.tinkoff.edu.java.scrapper.client.ScrapperClient;
-import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
-import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -55,8 +55,8 @@ public class UpdateMonitoringBot extends Bot {
         if (res == null || res.size() == 0) {
             return sendMessage(chatId, "Пока что отсутствуют отслеживаемые ссылки");
         }
-        return sendMessage(chatId, "Отслеживаемые ссылки:\n".concat(res.links().stream().
-                map(linkResponse -> linkResponse.url().toString()).collect(Collectors.joining("\n"))));
+        return sendMessage(chatId, "Отслеживаемые ссылки:\n".concat(res.links().stream()
+            .map(linkResponse -> linkResponse.url().toString()).collect(Collectors.joining("\n"))));
     }
 
     @Command(name = "/track", description = "начать отслеживание ссылки")
@@ -67,7 +67,7 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /track 'ссылка'");
         }
         String url = words[1];
-        if(LinkParser.parseLink(url) == null){
+        if (LinkParser.parseLink(url) == null) {
             return sendMessage(chatId, "Ссылка невалидная");
         }
         try {
@@ -86,7 +86,7 @@ public class UpdateMonitoringBot extends Bot {
             return sendMessage(chatId, "Формат команды должен быть: /untrack 'ссылка'");
         }
         String url = words[1];
-        if(LinkParser.parseLink(url) == null){
+        if (LinkParser.parseLink(url) == null) {
             return sendMessage(chatId, "Ссылка невалидная");
         }
         try {
@@ -103,8 +103,8 @@ public class UpdateMonitoringBot extends Bot {
     }
 
     public SendResponse sendMessage(long chatId, String text) {
-        SendMessage sendMessage = new SendMessage(chatId, "<i>".concat(text).concat("</i>")).
-                parseMode(ParseMode.HTML);
+        SendMessage sendMessage = new SendMessage(chatId, "<i>".concat(text).concat("</i>"))
+            .parseMode(ParseMode.HTML);
         return telegramBot.execute(sendMessage);
     }
 }

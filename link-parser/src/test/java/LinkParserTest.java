@@ -6,7 +6,6 @@ import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
 public class LinkParserTest {
     @Test
     public void testValidGithubLinks() {

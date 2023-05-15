@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.model.MessageEntity;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.tinkoff.edu.java.bot.UpdateMonitoringBot;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -12,10 +13,12 @@ import static org.mockito.Mockito.when;
 public class BotTest {
     private static UpdateMonitoringBot bot;
     private static long testChatId;
+    private static ScrapperClient scrapperClient;
 
     @BeforeAll
     public static void init() {
-        bot = new UpdateMonitoringBot("6234901711:AAHmMi5qffPndtmBXd0j6YFDKs9zH-7hBxA", null);
+        scrapperClient = mock(ScrapperClient.class);
+        bot = new UpdateMonitoringBot("5991824863:AAGLRPS01EfKLqfn-4KkGuwPlVj6kyln3jw", scrapperClient);
         testChatId = 795253839;
     }
 
@@ -25,6 +28,7 @@ public class BotTest {
         Chat chat = mock(Chat.class);
         when(list.chat()).thenReturn(chat);
         when(chat.id()).thenReturn(testChatId);
+        when(scrapperClient.getLinks(chat.id())).thenReturn(null);
         Message message = bot.list(list).message();
         assertEquals(message.text(), "Пока что отсутствуют отслеживаемые ссылки");
         assertEquals(message.entities()[0].type(), MessageEntity.Type.italic);

@@ -16,8 +16,8 @@ public class JdbcChatRepository implements ChatRepository {
     public JdbcChatRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         rowMapper = ((rs, rowNum) -> new Chat(
-                rs.getLong("chat_id"),
-                rs.getString("username")
+            rs.getLong("chat_id"),
+            rs.getString("username")
         ));
     }
 

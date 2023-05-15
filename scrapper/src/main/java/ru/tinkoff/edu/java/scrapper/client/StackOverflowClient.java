@@ -1,8 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.client;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.link_parser.StackOverflowQuestion;
 import ru.tinkoff.edu.java.scrapper.dto.QuestionResponse;
@@ -28,8 +28,8 @@ public class StackOverflowClient {
 
     public QuestionResponse fetchQuestion(StackOverflowQuestion question) {
         try {
-            JSONObject obj = new JSONObject(requestQuestion(question.id())).
-                    getJSONArray("items").getJSONObject(0);
+            JSONObject obj = new JSONObject(requestQuestion(question.id()))
+                .getJSONArray("items").getJSONObject(0);
             long id = obj.getLong("question_id");
             String title = obj.getString("title");
             OffsetDateTime updatedAt = convert(obj.getLong("last_activity_date"));
@@ -60,12 +60,12 @@ public class StackOverflowClient {
     }
 
     private String requestQuestion(long id) {
-        return webClient.get().uri("/questions/{id}?site=stackoverflow", id).
-                retrieve().bodyToMono(String.class).block();
+        return webClient.get().uri("/questions/{id}?site=stackoverflow", id)
+            .retrieve().bodyToMono(String.class).block();
     }
 
     private String requestQuestionAnswers(long id) {
-        return webClient.get().uri("/questions/{id}/answers?site=stackoverflow", id).
-                retrieve().bodyToMono(String.class).block();
+        return webClient.get().uri("/questions/{id}/answers?site=stackoverflow", id)
+            .retrieve().bodyToMono(String.class).block();
     }
 }

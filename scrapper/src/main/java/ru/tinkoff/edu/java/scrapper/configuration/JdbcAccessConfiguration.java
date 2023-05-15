@@ -19,8 +19,11 @@ import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkUpdater;
 @ConditionalOnProperty(prefix = "scrapper", name = "database-access-type", havingValue = "jdbc")
 public class JdbcAccessConfiguration {
     @Bean
-    public LinkService linkService(JdbcChatLinkRepository chatLinkRepository,
-                                   JdbcLinkRepository linkRepository, JdbcChatRepository chatRepository) {
+    public LinkService linkService(
+        JdbcChatLinkRepository chatLinkRepository,
+        JdbcLinkRepository linkRepository,
+        JdbcChatRepository chatRepository
+    ) {
         return new JdbcLinkService(chatLinkRepository, linkRepository, chatRepository);
     }
 

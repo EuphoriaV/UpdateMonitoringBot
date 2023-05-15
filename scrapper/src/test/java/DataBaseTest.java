@@ -13,7 +13,7 @@ public class DataBaseTest extends IntegrationEnvironment {
     @Test
     public void testLinksTableCreate() {
         try {
-            Connection connection = container.createConnection("");
+            Connection connection = CONTAINER.createConnection("");
             PreparedStatement statement = connection.prepareStatement("select * from links");
             var resultSet = statement.executeQuery();
             Set<String> linkFields = Set.of("link_id", "url", "checked_at");
@@ -29,7 +29,7 @@ public class DataBaseTest extends IntegrationEnvironment {
     @Test
     public void testChatsTableCreate() {
         try {
-            Connection connection = container.createConnection("");
+            Connection connection = CONTAINER.createConnection("");
             PreparedStatement statement = connection.prepareStatement("select * from chats");
             var resultSet = statement.executeQuery();
             Set<String> chatFields = Set.of("chat_id", "username");
@@ -45,7 +45,7 @@ public class DataBaseTest extends IntegrationEnvironment {
     @Test
     public void testChatLinkTableCreate() {
         try {
-            Connection connection = container.createConnection("");
+            Connection connection = CONTAINER.createConnection("");
             PreparedStatement statement = connection.prepareStatement("select * from chat_link");
             var resultSet = statement.executeQuery();
             Set<String> chatLinkFields = Set.of("link_id", "chat_id");

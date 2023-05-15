@@ -42,7 +42,6 @@ public class LinkUpdaterTest {
     @Autowired
     private JpaChatService jpaChatService;
 
-
     public List<ChatService> chatServices() {
         return List.of(jdbcChatService, jooqChatService, jpaChatService);
     }

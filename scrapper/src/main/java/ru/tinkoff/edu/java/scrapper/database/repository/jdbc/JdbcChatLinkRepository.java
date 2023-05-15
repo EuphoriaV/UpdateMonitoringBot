@@ -20,9 +20,10 @@ public class JdbcChatLinkRepository implements ChatLinkRepository {
     public JdbcChatLinkRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         rowMapper = ((rs, rowNum) -> new Subscription(
-                new Chat(rs.getLong("chat_id"), rs.getString("username")),
-                new Link(rs.getLong("link_id"), rs.getString("url"),
-                        OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC")))
+            new Chat(rs.getLong("chat_id"), rs.getString("username")),
+            new Link(rs.getLong("link_id"), rs.getString("url"),
+                OffsetDateTime.ofInstant(rs.getTimestamp("checked_at").toInstant(), ZoneId.of("UTC"))
+            )
         ));
     }
 

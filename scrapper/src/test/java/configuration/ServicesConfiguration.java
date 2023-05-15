@@ -44,13 +44,18 @@ public class ServicesConfiguration {
     }
 
     @Bean
-    public JdbcLinkService jdbcLinkService(JdbcChatLinkRepository chatLinkRepository,
-                                           JdbcLinkRepository linkRepository, JdbcChatRepository chatRepository) {
+    public JdbcLinkService jdbcLinkService(
+        JdbcChatLinkRepository chatLinkRepository,
+        JdbcLinkRepository linkRepository, JdbcChatRepository chatRepository
+    ) {
         return new JdbcLinkService(chatLinkRepository, linkRepository, chatRepository);
     }
 
     @Bean
-    public JdbcLinkUpdater jdbcLinkUpdater(JdbcLinkRepository linkRepository, JdbcChatLinkRepository chatLinkRepository) {
+    public JdbcLinkUpdater jdbcLinkUpdater(
+        JdbcLinkRepository linkRepository,
+        JdbcChatLinkRepository chatLinkRepository
+    ) {
         return new JdbcLinkUpdater(linkRepository, chatLinkRepository);
     }
 
@@ -60,13 +65,18 @@ public class ServicesConfiguration {
     }
 
     @Bean
-    public JooqLinkService jooqLinkService(JooqChatLinkRepository chatLinkRepository,
-                                           JooqLinkRepository linkRepository, JooqChatRepository chatRepository) {
+    public JooqLinkService jooqLinkService(
+        JooqChatLinkRepository chatLinkRepository,
+        JooqLinkRepository linkRepository, JooqChatRepository chatRepository
+    ) {
         return new JooqLinkService(chatLinkRepository, linkRepository, chatRepository);
     }
 
     @Bean
-    public JooqLinkUpdater jooqLinkUpdater(JooqLinkRepository linkRepository, JooqChatLinkRepository chatLinkRepository) {
+    public JooqLinkUpdater jooqLinkUpdater(
+        JooqLinkRepository linkRepository,
+        JooqChatLinkRepository chatLinkRepository
+    ) {
         return new JooqLinkUpdater(linkRepository, chatLinkRepository);
     }
 

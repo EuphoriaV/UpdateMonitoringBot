@@ -14,8 +14,8 @@ public class BotService {
 
     public void sendUpdate(LinkUpdate linkUpdate) {
         for (long id : linkUpdate.tgChatIds()) {
-            updateMonitoringBot.sendMessage(id, linkUpdate.description().concat(":\n").
-                    concat(linkUpdate.url().toString()));
+            updateMonitoringBot.sendMessage(id, linkUpdate.description().concat(":\n")
+                .concat(linkUpdate.url().toString()));
         }
     }
 }

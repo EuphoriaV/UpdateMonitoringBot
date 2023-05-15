@@ -24,8 +24,10 @@ public class LinkUpdaterScheduler {
     @Scheduled(fixedDelayString = "#{schedulerInterval}")
     public void update() {
         var updates = linkUpdater.getUpdates();
-        var map = updates.stream().collect(Collectors.groupingBy(Subscription::link,
-                Collectors.mapping(Subscription::chat, Collectors.toList())));
+        var map = updates.stream().collect(Collectors.groupingBy(
+            Subscription::link,
+            Collectors.mapping(Subscription::chat, Collectors.toList())
+        ));
         for (var entry : map.entrySet()) {
             Link link = entry.getKey();
             var chats = entry.getValue();

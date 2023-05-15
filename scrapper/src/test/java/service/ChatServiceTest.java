@@ -32,7 +32,6 @@ public class ChatServiceTest {
     @Autowired
     private JpaChatRepository chatRepository;
 
-
     public List<ChatService> services() {
         return List.of(jdbcChatService, jooqChatService, jpaChatService);
     }
