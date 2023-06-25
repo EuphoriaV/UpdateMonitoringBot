@@ -12,10 +12,6 @@ public class BotClient {
         webClient = WebClient.create(BASE_URL);
     }
 
-    public BotClient(String baseUrl) {
-        this.webClient = WebClient.create(baseUrl);
-    }
-
     public void update(LinkUpdate linkUpdate) {
         webClient.post().uri("/updates").bodyValue(linkUpdate).retrieve().toBodilessEntity().block();
     }

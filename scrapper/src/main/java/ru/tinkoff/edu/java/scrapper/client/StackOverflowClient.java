@@ -22,10 +22,6 @@ public class StackOverflowClient {
         webClient = WebClient.create(BASE_URL);
     }
 
-    public StackOverflowClient(String baseUrl) {
-        this.webClient = WebClient.create(baseUrl);
-    }
-
     public QuestionResponse fetchQuestion(StackOverflowQuestion question) {
         try {
             JSONObject obj = new JSONObject(requestQuestion(question.id()))

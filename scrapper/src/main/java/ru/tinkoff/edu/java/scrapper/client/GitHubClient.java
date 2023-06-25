@@ -16,10 +16,6 @@ public class GitHubClient {
         webClient = WebClient.create(BASE_URL);
     }
 
-    public GitHubClient(String baseUrl) {
-        this.webClient = WebClient.create(baseUrl);
-    }
-
     public RepositoryResponse fetchRepository(GitHubRepository repo) {
         try {
             JSONObject obj = new JSONObject(requestRepository(repo.user(), repo.repository()));
