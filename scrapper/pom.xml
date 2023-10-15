@@ -105,12 +105,6 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>link-parser</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>3.17.6</version>
@@ -143,6 +137,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20230227</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.tinkoff.edu.java</groupId>
+            <artifactId>link-parser</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
