@@ -1,6 +1,6 @@
 FROM openjdk:17.0.1-jdk-slim
 
-ARG JAR_FILE=./scrapper/target/*SNAPSHOT.jar
+ARG JAR_FILE=./scrapper/target/*.jar
 
 WORKDIR /app
 
